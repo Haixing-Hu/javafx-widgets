@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.github.haixing_hu</groupId>
+		<artifactId>pom-root</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<artifactId>javafx-widgets</artifactId>
+	<version>${javafx-widgets.version}</version>
+	<packaging>jar</packaging>
+	<name>JavaFX Widgets</name>
+	<url>https://github.com/Haixing-Hu/javafx-widgets/</url>
+
+	<build>
+		<plugins>
+			<plugin>
+    			<groupId>com.zenjava</groupId>
+    			<artifactId>javafx-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.github.haixing_hu</groupId>
+			<artifactId>java-commons</artifactId>
+		</dependency>
+	</dependencies>
+</project>
