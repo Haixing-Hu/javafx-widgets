@@ -34,6 +34,8 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
 
+import javax.annotation.Nullable;
+
 import com.github.haixing_hu.lang.Argument;
 
 /**
@@ -46,8 +48,7 @@ import com.github.haixing_hu.lang.Argument;
  */
 public class ActionGroup extends AbstractAction {
 
-  private final int options;
-  private final ObservableList<IAction> actions;
+  protected final ObservableList<IAction> actions;
 
   /**
    * Creates an empty {@link ActionGroup}.
@@ -56,50 +57,70 @@ public class ActionGroup extends AbstractAction {
    *          the type of buttons this action created.
    */
   public ActionGroup() {
-    this(ActionOption.DEFAULT, Collections.emptyList());
+    this(null, ActionOption.DEFAULT, Collections.emptyList());
   }
 
   /**
    * Creates an empty {@link ActionGroup}.
    *
+   * @param id
+   *          the id of the new action group.
+   */
+  public ActionGroup(@Nullable String id) {
+    this(id, ActionOption.DEFAULT, Collections.emptyList());
+  }
+
+  /**
+   * Creates an empty {@link ActionGroup}.
+   *
+   * @param id
+   *          the id of the new action group.Ï
    * @param options
    *          the options of new action group.
    */
-  public ActionGroup(ButtonType buttonType) {
-    this(ActionOption.DEFAULT, Collections.emptyList());
+  public ActionGroup(@Nullable String id, int options) {
+    this(id, options, Collections.emptyList());
   }
 
   /**
    * Creates an {@link ActionGroup}.
    *
+   * @param id
+   *          the id of the new action group.
    * @param actions
    *          the actions in this action group.
    */
-  public ActionGroup(IAction... actions) {
-    this(ActionOption.DEFAULT, Arrays.asList(actions));
+  public ActionGroup(@Nullable String id, IAction... actions) {
+    this(id, ActionOption.DEFAULT, Arrays.asList(actions));
   }
 
   /**
    * Creates an {@link ActionGroup}.
    *
+   * @param id
+   *          the id of the new action group.
    * @param options
-   *          the options of new action group.
+   *          the options of the new action group.
    * @param actions
-   *          the actions in this action group.
+   *          the actions in the new action group.
    */
-  public ActionGroup(int options, IAction... actions) {
-    this(options, Arrays.asList(actions));
+  public ActionGroup(@Nullable String id, int options, IAction... actions) {
+    this(id, options, Arrays.asList(actions));
   }
 
   /**
    * Creates an {@link ActionGroup}.
    *
+   * @param id
+   *          the id of the new action group.
    * @param options
-   *          the options of new action group.
+   *          the options of the new action group.
    * @param actions
-   *          the actions in this action group.
+   *          the actions in the new action group.
    */
-  public ActionGroup(int options, Collection<? extends IAction> actions) {
+  public ActionGroup(@Nullable String id, int options,
+      Collection<? extends IAction> actions) {
+    super(id, options);
     this.options = Argument.requireNonNull("options", options);
     this.actions = FXCollections.<IAction> observableArrayList();
     this.actions.addAll(actions);
@@ -116,6 +137,16 @@ public class ActionGroup extends AbstractAction {
    */
   public final ObservableList<IAction> getActions() {
     return actions;
+  }
+
+  /**
+   * Adds an action to this action group.
+   *
+   * @param action
+   *          the action to be added to this action group.
+   */
+  public final void add(IAction action) {
+    actions.add(action);
   }
 
   @Override

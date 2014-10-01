@@ -30,7 +30,7 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 
-import com.github.haixing_hu.lang.Argument;
+import javax.annotation.Nullable;
 
 /**
  * The simple implementation of {@link IAction}.
@@ -39,23 +39,45 @@ import com.github.haixing_hu.lang.Argument;
  */
 public abstract class Action extends AbstractAction {
 
-  private final int options;
-
   /**
    * Creates an {@link Action} use the default options.
    */
   public Action() {
-    this(ActionOption.DEFAULT);
+    this(null, ActionOption.DEFAULT);
+  }
+
+  /**
+   * Creates an {@link Action}.
+   *
+   * @param id
+   *          the id of the new action.
+   * @param options
+   *          the options of the new action.
+   */
+  public Action(@Nullable String id) {
+    this(id, ActionOption.DEFAULT);
   }
 
   /**
    * Creates an {@link Action}.
    *
    * @param options
-   *  the options for this action.
+   *          the options of the new action.
    */
   public Action(int options) {
-    this.options = Argument.requireNonNull("options", options);
+    this(null, options);
+  }
+
+  /**
+   * Creates an {@link Action}.
+   *
+   * @param id
+   *          the id of the new action.
+   * @param options
+   *          the options of the new action.
+   */
+  public Action(@Nullable String id, int options) {
+    super(id, options);
   }
 
   @Override

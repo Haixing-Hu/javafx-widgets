@@ -33,6 +33,8 @@ import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.input.KeyCombination;
 
+import javax.annotation.Nullable;
+
 /**
  * The abstract class for implementing the {@link IAction} interface.
  *
@@ -40,26 +42,43 @@ import javafx.scene.input.KeyCombination;
  */
 public abstract class AbstractAction implements IAction {
 
-  protected final StringProperty id;
-  protected final StringProperty text;
-  protected final StringProperty description;
-  protected final StringProperty style;
-  protected final ObjectProperty<KeyCombination> accelerator;
-  protected final ObjectProperty<Node> graphic;
-  protected final ObjectProperty<Pos> alignment;
-  protected final ObjectProperty<ContentDisplay> contentDisplay;
-  protected final DoubleProperty graphicTextGap;
-//  protected final BooleanProperty disable;
-  protected final BooleanProperty visible;
-  protected final BooleanProperty mnemonicParsing;
-  protected final BooleanProperty selected;
-  protected final BooleanProperty allowIndeterminate;
-  protected final BooleanProperty indeterminate;
-  protected final BooleanProperty visited;
-  protected final List<String> styleClass;
+  protected int options;
+  protected StringProperty id;
+  protected StringProperty text;
+  protected StringProperty description;
+  protected StringProperty style;
+  protected ObjectProperty<KeyCombination> accelerator;
+  protected ObjectProperty<Node> graphic;
+  protected ObjectProperty<Pos> alignment;
+  protected ObjectProperty<ContentDisplay> contentDisplay;
+  protected DoubleProperty graphicTextGap;
+//  protected BooleanProperty disable;
+  protected BooleanProperty visible;
+  protected BooleanProperty mnemonicParsing;
+  protected BooleanProperty selected;
+  protected BooleanProperty allowIndeterminate;
+  protected BooleanProperty indeterminate;
+  protected BooleanProperty visited;
+  protected List<String> styleClass;
 
-  public AbstractAction() {
-    id = new SimpleStringProperty(this, "id");
+  /**
+   * Constructs an {@link AbstractAction}.
+   */
+  public AbstractAction(int options) {
+    this(null, options);
+  }
+
+  /**
+   * Constructs an {@link AbstractAction}.
+   *
+   * @param options
+   *          the options of the new action.
+   * @param id
+   *          the id of the new action.
+   */
+  public AbstractAction(@Nullable String id, int options) {
+    this.options = options;
+    this.id = new SimpleStringProperty(this, "id", id);
     text = new SimpleStringProperty(this, "text");
     description = new SimpleStringProperty(this, "description");
     style = new SimpleStringProperty(this, "style");
@@ -100,6 +119,12 @@ public abstract class AbstractAction implements IAction {
 
   @Override
   public final void setText(String text) {
+    if ((options & ActionOption.SHOW_DIALOG) != 0) {
+      if (! text.endsWith("...")) {
+        //  append a " ..." to the text
+        text = text + " ...";
+      }
+    }
     this.text.set(text);
   }
 

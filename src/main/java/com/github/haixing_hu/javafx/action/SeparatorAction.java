@@ -44,6 +44,11 @@ import javafx.scene.input.KeyCombination;
  */
 public class SeparatorAction implements IAction {
 
+  /**
+   * The ID of all the separator actions.
+   */
+  public static final String ID = "__SEPARATOR__";
+
   @Override
   public void handle(ActionEvent event) {
     // do nothing
@@ -51,7 +56,7 @@ public class SeparatorAction implements IAction {
 
   @Override
   public String getId() {
-    throw new UnsupportedOperationException();
+    return ID;
   }
 
   @Override

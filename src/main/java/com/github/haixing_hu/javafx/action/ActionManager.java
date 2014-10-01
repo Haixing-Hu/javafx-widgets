@@ -17,18 +17,53 @@
  */
 package com.github.haixing_hu.javafx.action;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An {@link ActionManager} is a map from the id to the action.
  *
  * @author Haixing Hu
  */
-public class ActionManager extends HashMap<String, IAction> {
+public class ActionManager {
 
-  private static final long serialVersionUID = 1L;
+  private final Map<String, IAction> map;
 
   public ActionManager() {
-    super();
+    map = new HashMap<String, IAction>();
   }
+
+  public boolean isEmpty() {
+    return map.isEmpty();
+  }
+
+  public int size() {
+    return map.size();
+  }
+
+  public boolean contains(String id) {
+    return map.containsKey(id);
+  }
+
+  public IAction get(String id) {
+    return map.get(id);
+  }
+
+  public Collection<IAction> getAll() {
+    return map.values();
+  }
+
+  public void add(IAction action) {
+    map.put(action.getId(), action);
+  }
+
+  public IAction remove(String id) {
+    return map.remove(id);
+  }
+
+  public void clear() {
+    map.clear();
+  }
+
 }

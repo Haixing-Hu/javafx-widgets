@@ -129,6 +129,14 @@ public interface ActionOption {
   public static final int CUSTOM_MENU_ITEM = 0x00008000;
 
   /**
+   * Indicates that the action will display a dialog.
+   * <p>
+   * If the action will display a dialog, the text of the menu item created from
+   * the action should be appended with a "...".
+   */
+  public static final int SHOW_DIALOG = 0x00010000;
+
+  /**
    * The default options for actions.
    */
   public static final int DEFAULT = BUTTON | MENU_ITEM | MENU_BUTTON | MENU;
