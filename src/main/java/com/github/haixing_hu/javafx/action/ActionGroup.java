@@ -43,6 +43,15 @@ import com.github.haixing_hu.lang.Argument;
  * instances, allowing for more complex controls like {@link ToolBar},
  * {@link MenuBar} and {@link ContextMenu} to be automatically generated from
  * the collection of actions inside the {@link ActionGroup}.
+ * <p>
+ * <b>NOTE: </b> In this implementation, some style related properties (style,
+ * graphic, alignment, contentDisplay, graphicTextGap, etc) of the action are
+ * not bind to the corresponding properties of the created button or menu item,
+ * unless they have been set to some value before the creation of button or menu
+ * item. This is because some times we want to use the CSS style sheet to
+ * control the outlook of the button or menu item, while if we bind the style
+ * related property of the button to the action, the CSS styling may be not work
+ * in some case.
  *
  * @author Haixing Hu
  */
@@ -178,17 +187,28 @@ public class ActionGroup extends AbstractAction {
       tooltip.textProperty().bindBidirectional(description);
       button.setTooltip(tooltip);
     }
-    button.styleProperty().bindBidirectional(style);
-    if ((options & ActionOption.HIDE_BUTTON_GRAPHIC) == 0) {
+    if (style.get() != null) {
+      button.styleProperty().bindBidirectional(style);
+    }
+    if ((graphic.get() != null)
+        && ((options & ActionOption.HIDE_BUTTON_GRAPHIC) == 0)) {
       button.graphicProperty().bindBidirectional(graphic);
     }
-    button.alignmentProperty().bindBidirectional(alignment);
-    button.contentDisplayProperty().bindBidirectional(contentDisplay);
-    button.graphicTextGapProperty().bindBidirectional(graphicTextGap);
+    if (alignment.get() != null) {
+      button.alignmentProperty().bindBidirectional(alignment);
+    }
+    if (contentDisplay.get() != null) {
+      button.contentDisplayProperty().bindBidirectional(contentDisplay);
+    }
+    if (graphicTextGap.get() >= 0) {
+      button.graphicTextGapProperty().bindBidirectional(graphicTextGap);
+    }
     button.visibleProperty().bindBidirectional(visible);
     button.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
+
     button.getStyleClass().addAll(styleClass);
     button.setOnAction(this);
+
     final ObservableList<MenuItem> buttonItems = button.getItems();
     for (final IAction action : actions) {
       final MenuItem item = action.createMenuItem();
@@ -215,15 +235,22 @@ public class ActionGroup extends AbstractAction {
     if ((options & ActionOption.HIDE_MENU_ITEM_TEXT) == 0) {
       menu.textProperty().bindBidirectional(text);
     }
-    menu.styleProperty().bindBidirectional(style);
-    menu.acceleratorProperty().bindBidirectional(accelerator);
-    if ((options & ActionOption.HIDE_MENU_ITEM_GRAPHIC) == 0) {
+    if (style.get() != null) {
+      menu.styleProperty().bindBidirectional(style);
+    }
+    if (accelerator.get() != null) {
+      menu.acceleratorProperty().bindBidirectional(accelerator);
+    }
+    if ((graphic.get() != null)
+        && ((options & ActionOption.HIDE_MENU_ITEM_GRAPHIC) == 0)) {
       menu.graphicProperty().bindBidirectional(graphic);
     }
     menu.visibleProperty().bindBidirectional(visible);
     menu.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
+
     menu.getStyleClass().addAll(styleClass);
     menu.setOnAction(this);
+
     final ObservableList<MenuItem> menuItems = menu.getItems();
     for (final IAction action : actions) {
       final MenuItem item = action.createMenuItem();

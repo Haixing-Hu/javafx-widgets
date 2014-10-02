@@ -33,7 +33,16 @@ import javafx.scene.control.Tooltip;
 import javax.annotation.Nullable;
 
 /**
- * The simple implementation of {@link IAction}.
+ * The default implementation of {@link IAction}.
+ * <p>
+ * <b>NOTE: </b> In this implementation, some style related properties (style,
+ * graphic, alignment, contentDisplay, graphicTextGap, etc) of the action are
+ * not bind to the corresponding properties of the created button or menu item,
+ * unless they have been set to some value before the creation of button or menu
+ * item. This is because some times we want to use the CSS style sheet to
+ * control the outlook of the button or menu item, while if we bind the style
+ * related property of the button to the action, the CSS styling may be not work
+ * in some case.
  *
  * @author Haixing Hu
  */
@@ -128,15 +137,25 @@ public abstract class Action extends AbstractAction {
       tooltip.textProperty().bindBidirectional(description);
       button.setTooltip(tooltip);
     }
-    button.styleProperty().bindBidirectional(style);
-    if ((options & ActionOption.HIDE_BUTTON_GRAPHIC) == 0) {
+    if (style.get() != null) {
+      button.styleProperty().bindBidirectional(style);
+    }
+    if ((graphic.get() != null) && ((options & ActionOption.HIDE_BUTTON_GRAPHIC) == 0)) {
       button.graphicProperty().bindBidirectional(graphic);
     }
-    button.alignmentProperty().bindBidirectional(alignment);
-    button.contentDisplayProperty().bindBidirectional(contentDisplay);
-    button.graphicTextGapProperty().bindBidirectional(graphicTextGap);
+    if (alignment.get() != null) {
+      button.alignmentProperty().bindBidirectional(alignment);
+    }
+    if (contentDisplay.get() != null) {
+      button.contentDisplayProperty().bindBidirectional(contentDisplay);
+    }
+    if (graphicTextGap.get() >= 0) {
+      button.graphicTextGapProperty().bindBidirectional(graphicTextGap);
+    }
+
     button.visibleProperty().bindBidirectional(visible);
     button.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
+
     button.getStyleClass().addAll(styleClass);
     button.setOnAction(this);
   }
@@ -200,13 +219,20 @@ public abstract class Action extends AbstractAction {
     if ((options & ActionOption.HIDE_MENU_ITEM_TEXT) == 0) {
       item.textProperty().bindBidirectional(text);
     }
-    item.styleProperty().bindBidirectional(style);
-    item.acceleratorProperty().bindBidirectional(accelerator);
-    if ((options & ActionOption.HIDE_MENU_ITEM_GRAPHIC) == 0) {
+    if (style.get() != null) {
+      item.styleProperty().bindBidirectional(style);
+    }
+    if (accelerator.get() != null) {
+      item.acceleratorProperty().bindBidirectional(accelerator);
+    }
+    if ((graphic.get() != null)
+        && ((options & ActionOption.HIDE_MENU_ITEM_GRAPHIC) == 0)) {
       item.graphicProperty().bindBidirectional(graphic);
     }
+
     item.visibleProperty().bindBidirectional(visible);
     item.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
+
     item.getStyleClass().addAll(styleClass);
     item.setOnAction(this);
   }

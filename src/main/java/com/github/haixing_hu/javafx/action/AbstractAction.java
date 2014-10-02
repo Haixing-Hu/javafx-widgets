@@ -90,8 +90,7 @@ public abstract class AbstractAction implements IAction {
     graphic = new SimpleObjectProperty<Node>(this, "graphic");
     alignment = new SimpleObjectProperty<Pos>(this, "alignment", Pos.CENTER_LEFT);
     contentDisplay = new SimpleObjectProperty<ContentDisplay>(this, "contentDisplay", ContentDisplay.LEFT);
-    graphicTextGap = new SimpleDoubleProperty(this, "graphicTextGap", 4);
-//    disable = new SimpleBooleanProperty(this, "disable", false);
+    graphicTextGap = new SimpleDoubleProperty(this, "graphicTextGap", -1);
     visible = new SimpleBooleanProperty(this, "visibles", true);
     mnemonicParsing = new SimpleBooleanProperty(this, "mnemonicParsing", true);
     selected = new SimpleBooleanProperty(this, "selected", false);
