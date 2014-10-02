@@ -66,16 +66,10 @@ public interface IAction extends EventHandler<ActionEvent> {
   /**
    * Gets the id of this action.
    * <p>
-   * This simple string identifier is useful for finding a specific {@link Node}
-   * within the scene graph. While the id of a {@link Node} should be unique
-   * within the scene graph, this uniqueness is not enforced. This is analogous
-   * to the "id" attribute on an HTML element (<a
-   * href="http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier">CSS ID
-   * Specification</a>).
-   * <p>
-   * For example, if a {@link Node} is given the id of "myId", then the lookup
-   * method can be used to find this node as follows:
-   * <code>scene.lookup("#myId");</code>.
+   * <b>NOTE:</b> the id of an action is <b>not</b> the id of the button and the
+   * menu item created from that action. To get/set the id of button create from
+   * an action, use the {@link #getButtonId()}, {@link #setButtonId(String)},
+   * {@link #getMenuItemId()}, and {@link #setMenuItemId(String)}.
    *
    * @return the id of this action, or <code>null</code> if it has none.
    */
@@ -84,16 +78,10 @@ public interface IAction extends EventHandler<ActionEvent> {
   /**
    * Sets the id of this action.
    * <p>
-   * This simple string identifier is useful for finding a specific {@link Node}
-   * within the scene graph. While the id of a {@link Node} should be unique
-   * within the scene graph, this uniqueness is not enforced. This is analogous
-   * to the "id" attribute on an HTML element (<a
-   * href="http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier">CSS ID
-   * Specification</a>).
-   * <p>
-   * For example, if a {@link Node} is given the id of "myId", then the lookup
-   * method can be used to find this node as follows:
-   * <code>scene.lookup("#myId");</code>.
+   * <b>NOTE:</b> the id of an action is <b>not</b> the id of the button and the
+   * menu item created from that action. To get/set the id of button create from
+   * an action, use the {@link #getButtonId()}, {@link #setButtonId(String)},
+   * {@link #getMenuItemId()}, and {@link #setMenuItemId(String)}.
    *
    * @param id
    *          the new id to be set to this action, or <code>null</code> to set
@@ -102,22 +90,38 @@ public interface IAction extends EventHandler<ActionEvent> {
   public void setId(@Nullable String id);
 
   /**
-   * Gets the id property of this action.
-   * <p>
-   * This simple string identifier is useful for finding a specific {@link Node}
-   * within the scene graph. While the id of a {@link Node} should be unique
-   * within the scene graph, this uniqueness is not enforced. This is analogous
-   * to the "id" attribute on an HTML element (<a
-   * href="http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier">CSS ID
-   * Specification</a>).
-   * <p>
-   * For example, if a {@link Node} is given the id of "myId", then the lookup
-   * method can be used to find this node as follows:
-   * <code>scene.lookup("#myId");</code>.
+   * Gets the id of the button created from this action.
    *
-   * @return the id property of this action.
+   * @return the id of the button created from this action, or <code>null</code>
+   *         if it has none.
    */
-  public StringProperty idProperty();
+  public String getButtonId();
+
+  /**
+   * Sets the id of the button created from this action.
+   *
+   * @param buttonId
+   *          the new id to be set to the button created from this action, or
+   *          <code>null</code> to set none.
+   */
+  public void setButtonId(@Nullable String buttonId);
+
+  /**
+   * Gets the id of the menu item created from this action.
+   *
+   * @return the id of the menu item created from this action, or
+   *         <code>null</code> if it has none.
+   */
+  public String getMenuItemId();
+
+  /**
+   * Sets the id of the menu item created from this action.
+   *
+   * @param menuItemId
+   *          the new id to be set to the menu item created from this action, or
+   *          <code>null</code> to set none.
+   */
+  public void setMenuItemId(@Nullable String menuItemId);
 
   /**
    * Gets the text (i.e., title) of this action.
@@ -198,11 +202,11 @@ public interface IAction extends EventHandler<ActionEvent> {
    * this variable contains style properties and values and not the selector
    * portion of a style rule.
    *
-   * @param description
+   * @param style
    *          the new style to be set to this action, or <code>null</code> to
    *          set none.
    */
-  public void setStyle(@Nullable String description);
+  public void setStyle(@Nullable String style);
 
   /**
    * Gets the style property of this action.
@@ -599,39 +603,39 @@ public interface IAction extends EventHandler<ActionEvent> {
   // public BooleanProperty disableProperty();
 
   /**
-   * Tests whether this action is visible.
+   * Tests whether this action is visibles.
    * <p>
    * The widgets (buttons, menu items, sub-menus, context menus, etc) created by
    * an invisible action will not be rendered as part of the scene graph.
    * <p>
    * The default value of this property is {@code true}.
    *
-   * @return whether this action is visible.
+   * @return whether this action is visibles.
    */
   public boolean isVisible();
 
   /**
-   * Sets the visible property of this action.
+   * Sets the visibles property of this action.
    * <p>
    * The widgets (buttons, menu items, sub-menus, context menus, etc) created by
    * an invisible action will not be rendered as part of the scene graph.
    * <p>
    * The default value of this property is {@code true}.
    *
-   * @param visible
-   *          the new value to be set to the visible property of this action.
+   * @param visibles
+   *          the new value to be set to the visibles property of this action.
    */
   public void setVisible(boolean visible);
 
   /**
-   * Gets the visible property of this action.
+   * Gets the visibles property of this action.
    * <p>
    * The widgets (buttons, menu items, sub-menus, context menus, etc) created by
    * an invisible action will not be rendered as part of the scene graph.
    * <p>
    * The default value of this property is {@code true}.
    *
-   * @return the visible property of this action.
+   * @return the visibles property of this action.
    */
   public BooleanProperty visibleProperty();
 
@@ -715,7 +719,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    *         returned button depended on the detailed implementation of this
    *         interface.
    */
-  public Control creatButton();
+  public Control createButton();
 
   /**
    * Creates a menu item from this action.
@@ -725,4 +729,11 @@ public interface IAction extends EventHandler<ActionEvent> {
    *         interface.
    */
   public MenuItem createMenuItem();
+
+  /**
+   * Creates a menu from this action.
+   *
+   * @return the menu created from this action.
+   */
+  public Menu createMenu();
 }

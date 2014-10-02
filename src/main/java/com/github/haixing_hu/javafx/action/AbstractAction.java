@@ -43,7 +43,9 @@ import javax.annotation.Nullable;
 public abstract class AbstractAction implements IAction {
 
   protected int options;
-  protected StringProperty id;
+  protected String id;
+  protected String buttonId;
+  protected String menuItemId;
   protected StringProperty text;
   protected StringProperty description;
   protected StringProperty style;
@@ -78,7 +80,9 @@ public abstract class AbstractAction implements IAction {
    */
   public AbstractAction(@Nullable String id, int options) {
     this.options = options;
-    this.id = new SimpleStringProperty(this, "id", id);
+    this.id = id;
+    buttonId = null;
+    menuItemId = null;
     text = new SimpleStringProperty(this, "text");
     description = new SimpleStringProperty(this, "description");
     style = new SimpleStringProperty(this, "style");
@@ -88,7 +92,7 @@ public abstract class AbstractAction implements IAction {
     contentDisplay = new SimpleObjectProperty<ContentDisplay>(this, "contentDisplay", ContentDisplay.LEFT);
     graphicTextGap = new SimpleDoubleProperty(this, "graphicTextGap", 4);
 //    disable = new SimpleBooleanProperty(this, "disable", false);
-    visible = new SimpleBooleanProperty(this, "visible", true);
+    visible = new SimpleBooleanProperty(this, "visibles", true);
     mnemonicParsing = new SimpleBooleanProperty(this, "mnemonicParsing", true);
     selected = new SimpleBooleanProperty(this, "selected", false);
     allowIndeterminate = new SimpleBooleanProperty(this, "allowIndeterminate", false);
@@ -99,17 +103,32 @@ public abstract class AbstractAction implements IAction {
 
   @Override
   public final String getId() {
-    return id.get();
+    return id;
   }
 
   @Override
   public final void setId(String id) {
-    this.id.set(id);
+    this.id = id;
   }
 
   @Override
-  public final StringProperty idProperty() {
-    return id;
+  public String getButtonId() {
+    return buttonId;
+  }
+
+  @Override
+  public void setButtonId(String buttonId) {
+    this.buttonId = buttonId;
+  }
+
+  @Override
+  public String getMenuItemId() {
+    return menuItemId;
+  }
+
+  @Override
+  public void setMenuItemId(String menuItemId) {
+    this.menuItemId = menuItemId;
   }
 
   @Override

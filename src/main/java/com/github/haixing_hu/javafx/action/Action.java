@@ -81,7 +81,7 @@ public abstract class Action extends AbstractAction {
   }
 
   @Override
-  public ButtonBase creatButton() {
+  public ButtonBase createButton() {
     switch (options & ActionOption.BUTTON_TYPE_MASK) {
       case ActionOption.CHECK_BOX: {
         final CheckBox button = new CheckBox();
@@ -117,44 +117,46 @@ public abstract class Action extends AbstractAction {
   }
 
   private void configButton(ButtonBase button) {
-    button.idProperty().bind(id);
+    if (buttonId != null) {
+      button.setId(buttonId);
+    }
     if ((options & ActionOption.HIDE_BUTTON_TEXT) == 0) {
-      button.textProperty().bind(text);
+      button.textProperty().bindBidirectional(text);
     }
     if (description.get() != null) {
       final Tooltip tooltip = new Tooltip();
-      tooltip.textProperty().bind(description);
+      tooltip.textProperty().bindBidirectional(description);
       button.setTooltip(tooltip);
     }
-    button.styleProperty().bind(style);
+    button.styleProperty().bindBidirectional(style);
     if ((options & ActionOption.HIDE_BUTTON_GRAPHIC) == 0) {
-      button.graphicProperty().bind(graphic);
+      button.graphicProperty().bindBidirectional(graphic);
     }
-    button.alignmentProperty().bind(alignment);
-    button.contentDisplayProperty().bind(contentDisplay);
-    button.graphicTextGapProperty().bind(graphicTextGap);
-    button.visibleProperty().bind(visible);
-    button.mnemonicParsingProperty().bind(mnemonicParsing);
+    button.alignmentProperty().bindBidirectional(alignment);
+    button.contentDisplayProperty().bindBidirectional(contentDisplay);
+    button.graphicTextGapProperty().bindBidirectional(graphicTextGap);
+    button.visibleProperty().bindBidirectional(visible);
+    button.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
     button.getStyleClass().addAll(styleClass);
     button.setOnAction(this);
   }
 
   private void configCheckBox(CheckBox button) {
-    button.selectedProperty().bind(selected);
-    button.allowIndeterminateProperty().bind(allowIndeterminate);
-    button.indeterminateProperty().bind(indeterminate);
+    button.selectedProperty().bindBidirectional(selected);
+    button.allowIndeterminateProperty().bindBidirectional(allowIndeterminate);
+    button.indeterminateProperty().bindBidirectional(indeterminate);
   }
 
   private void configRadioButon(RadioButton button) {
-    button.selectedProperty().bind(selected);
+    button.selectedProperty().bindBidirectional(selected);
   }
 
   private void configToggleButon(ToggleButton button) {
-    button.selectedProperty().bind(selected);
+    button.selectedProperty().bindBidirectional(selected);
   }
 
   private void configHyperlink(Hyperlink button) {
-    button.visitedProperty().bind(visited);
+    button.visitedProperty().bindBidirectional(visited);
   }
 
   @Override
@@ -192,26 +194,35 @@ public abstract class Action extends AbstractAction {
   }
 
   private void configMenuItem(MenuItem item) {
-    item.idProperty().bind(id);
+    if (menuItemId != null) {
+      item.setId(menuItemId);
+    }
     if ((options & ActionOption.HIDE_MENU_ITEM_TEXT) == 0) {
-      item.textProperty().bind(text);
+      item.textProperty().bindBidirectional(text);
     }
-    item.styleProperty().bind(style);
-    item.acceleratorProperty().bind(accelerator);
+    item.styleProperty().bindBidirectional(style);
+    item.acceleratorProperty().bindBidirectional(accelerator);
     if ((options & ActionOption.HIDE_MENU_ITEM_GRAPHIC) == 0) {
-      item.graphicProperty().bind(graphic);
+      item.graphicProperty().bindBidirectional(graphic);
     }
-    item.visibleProperty().bind(visible);
-    item.mnemonicParsingProperty().bind(mnemonicParsing);
+    item.visibleProperty().bindBidirectional(visible);
+    item.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
     item.getStyleClass().addAll(styleClass);
     item.setOnAction(this);
   }
 
   private void configCheckMenuItem(CheckMenuItem item) {
-    item.selectedProperty().bind(selected);
+    item.selectedProperty().bindBidirectional(selected);
   }
 
   private void configRadioMenuItem(RadioMenuItem item) {
-    item.selectedProperty().bind(selected);
+    item.selectedProperty().bindBidirectional(selected);
+  }
+
+  @Override
+  public Menu createMenu() {
+    final Menu item = new Menu();
+    configMenuItem(item);
+    return item;
   }
 }

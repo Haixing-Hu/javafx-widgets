@@ -28,6 +28,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Control;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.control.SeparatorMenuItem;
@@ -65,7 +66,22 @@ public class SeparatorAction implements IAction {
   }
 
   @Override
-  public StringProperty idProperty() {
+  public String getButtonId() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setButtonId(String id) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public String getMenuItemId() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setMenuItemId(String id) {
     throw new UnsupportedOperationException();
   }
 
@@ -287,13 +303,18 @@ public class SeparatorAction implements IAction {
   }
 
   @Override
-  public Control creatButton() {
+  public Control createButton() {
     return new Separator();
   }
 
   @Override
   public MenuItem createMenuItem() {
     return new SeparatorMenuItem();
+  }
+
+  @Override
+  public Menu createMenu() {
+    throw new UnsupportedOperationException();
   }
 
 }

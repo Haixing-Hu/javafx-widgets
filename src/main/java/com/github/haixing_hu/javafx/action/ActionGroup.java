@@ -150,7 +150,7 @@ public class ActionGroup extends AbstractAction {
   }
 
   @Override
-  public ButtonBase creatButton() {
+  public ButtonBase createButton() {
     switch (options & ActionOption.BUTTON_TYPE_MASK) {
       case ActionOption.SPLIT_MENU_BUTTON: {
         final SplitMenuButton button = new SplitMenuButton();
@@ -167,24 +167,26 @@ public class ActionGroup extends AbstractAction {
   }
 
   private void configMenuButton(MenuButton button) {
-    button.idProperty().bind(id);
+    if (buttonId != null) {
+      button.setId(buttonId);
+    }
     if ((options & ActionOption.HIDE_BUTTON_TEXT) == 0) {
-      button.textProperty().bind(text);
+      button.textProperty().bindBidirectional(text);
     }
     if (description.get() != null) {
       final Tooltip tooltip = new Tooltip();
-      tooltip.textProperty().bind(description);
+      tooltip.textProperty().bindBidirectional(description);
       button.setTooltip(tooltip);
     }
-    button.styleProperty().bind(style);
+    button.styleProperty().bindBidirectional(style);
     if ((options & ActionOption.HIDE_BUTTON_GRAPHIC) == 0) {
-      button.graphicProperty().bind(graphic);
+      button.graphicProperty().bindBidirectional(graphic);
     }
-    button.alignmentProperty().bind(alignment);
-    button.contentDisplayProperty().bind(contentDisplay);
-    button.graphicTextGapProperty().bind(graphicTextGap);
-    button.visibleProperty().bind(visible);
-    button.mnemonicParsingProperty().bind(mnemonicParsing);
+    button.alignmentProperty().bindBidirectional(alignment);
+    button.contentDisplayProperty().bindBidirectional(contentDisplay);
+    button.graphicTextGapProperty().bindBidirectional(graphicTextGap);
+    button.visibleProperty().bindBidirectional(visible);
+    button.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
     button.getStyleClass().addAll(styleClass);
     button.setOnAction(this);
     final ObservableList<MenuItem> buttonItems = button.getItems();
@@ -207,17 +209,19 @@ public class ActionGroup extends AbstractAction {
   }
 
   private void configMenu(Menu menu) {
-    menu.idProperty().bind(id);
+    if (menuItemId != null) {
+      menu.setId(menuItemId);
+    }
     if ((options & ActionOption.HIDE_MENU_ITEM_TEXT) == 0) {
-      menu.textProperty().bind(text);
+      menu.textProperty().bindBidirectional(text);
     }
-    menu.styleProperty().bind(style);
-    menu.acceleratorProperty().bind(accelerator);
+    menu.styleProperty().bindBidirectional(style);
+    menu.acceleratorProperty().bindBidirectional(accelerator);
     if ((options & ActionOption.HIDE_MENU_ITEM_GRAPHIC) == 0) {
-      menu.graphicProperty().bind(graphic);
+      menu.graphicProperty().bindBidirectional(graphic);
     }
-    menu.visibleProperty().bind(visible);
-    menu.mnemonicParsingProperty().bind(mnemonicParsing);
+    menu.visibleProperty().bindBidirectional(visible);
+    menu.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
     menu.getStyleClass().addAll(styleClass);
     menu.setOnAction(this);
     final ObservableList<MenuItem> menuItems = menu.getItems();
@@ -225,6 +229,13 @@ public class ActionGroup extends AbstractAction {
       final MenuItem item = action.createMenuItem();
       menuItems.add(item);
     }
+  }
+
+  @Override
+  public Menu createMenu() {
+    final Menu menu = new Menu();
+    configMenu(menu);
+    return menu;
   }
 
   @Override
