@@ -35,10 +35,11 @@ import org.slf4j.LoggerFactory;
  * That is, after the first call to {@link #hideItem(int)},
  * {@link #showItem(int)} or {@link #setItemVisible(int, boolean)}, the items of
  * this split pane should not be added or removed anymore.</li>
- * <li>Showing a hidden node will try to restore its original occupied proportion.
- * Until now I don't know any better algorithm to do that. Therefore, if the
- * node is the first or last node, the effect of this implementation is O.K., but
- * if the node is a middle node, the effect may be not satisfiable.</li>
+ * <li>Showing a hidden node will try to restore its original occupied
+ * proportion. Until now I don't know any better algorithm to do that.
+ * Therefore, if the split pane has only two children, the effect of this
+ * implementation is O.K., but if the split pane has more than two children, the
+ * effect may be not satisfiable.</li>
  * </ul>
  *
  * @author Haixing Hu
@@ -87,41 +88,33 @@ public class SplitPaneEx extends SplitPane {
     if (! visibles[index]) { // the node has already been hidden
       return;
     }
-    if (allOthersHiddenExcept(index)) {
-      logger.warn("All other children panes were hidden, so ignore this action.");
+    final ObservableList<Node> items = getItems();
+    if (items.size() <= 1) {
+      logger
+          .warn("All other children panes were hidden, so ignore this action.");
       return;
     }
     final Node node = originalItems[index];
-    //  find the node in the item list
-    final ObservableList<Node> items = getItems();
+    // find the node in the item list
     final int pos = findNode(items, node);
     if (pos >= items.size()) {
       logger.error("Try to hide a non-exist node.");
-    } else {
-      //  member the proportion that the node occupies
-      final double[] positions = getDividerPositions();
-      if (pos == 0) {
-        proportions[index] = positions[0];
-      } else if (pos == (items.size() - 1)) {
-        proportions[index] = 1.0 - positions[pos - 1];
-      } else {
-        proportions[index] = positions[pos] - positions[pos - 1];
-      }
-      logger.debug("positions = {}", positions);
-      logger.debug("proportions[{}] = {}", index, proportions[index]);
-      //  remove the node from the item list
-      items.remove(pos);
-      visibles[index] = false;
+      return;
     }
-  }
-
-  private final boolean allOthersHiddenExcept(int index) {
-    for (int i = 0; i < visibles.length; ++i) {
-      if ((i != index) && visibles[i]) {
-        return false;
-      }
-    }
-    return true;
+    // member the proportion that the node occupies
+    final double[] positions = getDividerPositions();
+    logger.debug("pos = {}", pos);
+    logger.debug("positions = {}", positions);
+    proportions[index] = getProportion(positions, pos);
+    logger.debug("proportions[index] = {}", proportions[index]);
+    // remove the node from the item list
+    items.remove(pos);
+    // set the new divider positions
+    final double[] newPositions = getPositiosAfterRemoving(positions, pos);
+    logger.debug("newPositions = {}", newPositions);
+    setDividerPositions(newPositions);
+    logger.debug("After setting, positions = {}", getDividerPositions());
+    visibles[index] = false;
   }
 
   private int findNode(ObservableList<Node> items, Node node) {
@@ -159,38 +152,91 @@ public class SplitPaneEx extends SplitPane {
     if (! (node instanceof Pane)) {
       throw new IllegalArgumentException("Only pane node can be hidden.");
     }
-    //  find the insertion position of the node
+    // find the insertion position of the node
     final ObservableList<Node> items = getItems();
     final int pos = findInsertPosition(items, node);
-    //  insert the node to the item list
-    items.add(pos, node);
-    //  restore the original proportion occupied by the node
+    logger.debug("pos = {}", pos);
     final double[] positions = getDividerPositions();
     logger.debug("positions = {}", positions);
-    logger.debug("proportions[{}] = {}", index, proportions[index]);
-    if (pos == 0) {
-      setDividerPosition(0, proportions[index]);
-    } else if (pos == (items.size() - 1)) {
-      setDividerPosition(pos -1, 1.0 - proportions[index]);
-    } else {
-      positions[pos - 1] -= proportions[index] / 2.0;
-      positions[pos] += proportions[index] / 2.0;
-      setDividerPositions(positions);
-    }
-    logger.debug("positions = {}", positions);
-    logger.debug("proportions[{}] = {}", index, proportions[index]);
+    // insert the node to the item list
+    items.add(pos, node);
+    // restore the original proportion occupied by the node
+    final double[] newPositions = getPositionsAfterInsertion(positions, pos,
+        proportions[index]);
+    logger.debug("proportions[index] = {}", proportions[index]);
+    logger.debug("newPositions = {}", newPositions);
+    setDividerPositions(newPositions);
+    logger.debug("After setting, positions = {}", getDividerPositions());
+
     visibles[index] = true;
   }
 
   private final int findInsertPosition(ObservableList<Node> items, Node node) {
     final int n = items.size();
     int i = 0;
-    for ( ; i < n; ++i) {
+    for (; i < n; ++i) {
       if (isBefore(node, items.get(i))) {
         return i;
       }
     }
     return n;
+  }
+
+  private double getProportion(double[] positions, int pos) {
+    final int n = positions.length;
+    if (n == 0) {
+      return 1.0;
+    }
+    if (pos == 0) { // this is the first child
+      return positions[0];
+    } else if (pos == n) { // this is the last child
+      return 1.0 - positions[n - 1];
+    } else { // this is the middle child
+      return positions[pos] - positions[pos - 1];
+    }
+  }
+
+  private double[] getPositiosAfterRemoving(double[] positions, int pos) {
+    final int n = positions.length;
+    if (n == 1) {
+      return new double[0];
+    }
+    final double[] result = new double[n - 1];
+    if (pos == 0) { // remove the first child
+      // all spaces are allocated to its right sibling
+      System.arraycopy(positions, 1, result, 0, n - 1);
+    } else if (pos == n) { // remove the last child
+      // all spaces are allocated to its left sibling
+      System.arraycopy(positions, 0, result, 0, n - 1);
+    } else { // remove the middle child
+      // the spaces are allocated to its left and right sibling equally
+      System.arraycopy(positions, 0, result, 0, pos - 1);
+      System.arraycopy(positions, pos + 1, result, pos, n - pos - 1);
+      result[pos - 1] = (positions[pos - 1] + positions[pos]) / 2;
+    }
+    return result;
+  }
+
+  private double[] getPositionsAfterInsertion(double[] positions, int pos,
+      double proportion) {
+    final int n = positions.length;
+    final double[] result = new double[n + 1];
+    if (pos == 0) { // insert as the first child
+      // all spaces are collected from its right sibling
+      result[0] = proportion;
+      System.arraycopy(positions, 0, result, 1, n);
+    } else if (pos == (n + 1)) { // insert as the last child
+      // all spaces are collected from its left sibling
+      System.arraycopy(positions, 0, result, 0, n);
+      result[n] = 1.0 - proportion;
+    } else { // insert as the middle child
+      // the spaces are collected from its left and right sibling equally
+      System.arraycopy(positions, 0, result, 0, pos - 1);
+      System.arraycopy(positions, pos, result, pos + 1, n - pos);
+      result[pos - 1] = positions[pos - 1] - (proportion / 2);
+      result[pos] = positions[pos - 1] + (proportion / 2);
+    }
+    return result;
   }
 
   private final boolean isBefore(Node node1, Node node2) {

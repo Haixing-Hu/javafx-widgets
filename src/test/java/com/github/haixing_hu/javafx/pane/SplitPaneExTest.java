@@ -28,6 +28,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+
 /**
  * Unit test of the {@link SplitPaneEx} class.
  *
@@ -35,7 +36,7 @@ import javafx.stage.Stage;
  */
 public class SplitPaneExTest extends Application {
 
-  private static final int CHILD_MIN_WIDTH = 10;
+  private static final int CHILD_MIN_WIDTH = 0;
 
   private static final int CHILD_PREF_WIDTH = 160;
 
@@ -98,30 +99,31 @@ public class SplitPaneExTest extends Application {
 
     public HorizontalChildren(int n) {
       super();
-      final SplitPaneEx splitPane = new SplitPaneEx();
-      VBox.setVgrow(splitPane, Priority.ALWAYS);
+      final SplitPaneEx pane = new SplitPaneEx();
+      VBox.setVgrow(pane, Priority.ALWAYS);
       for (int i = 0; i < n; ++i) {
         final LabelPane child = new LabelPane("Child " + (i+1));
         child.setMinWidth(CHILD_MIN_WIDTH);
         child.setPrefWidth(CHILD_PREF_WIDTH);
         child.setMaxWidth(CHILD_PREF_WIDTH * 2);
-        splitPane.getItems().add(child);
+        pane.getItems().add(child);
       }
       final double pos = 1.0 / n;
       for (int i = 0; i < (n - 1); ++i) {
-        splitPane.setDividerPosition(i, pos * (i + 1));
+        pane.setDividerPosition(i, pos * (i + 1));
       }
 
       final ToolBar toolBar = new ToolBar();
       VBox.setVgrow(toolBar, Priority.NEVER);
       for (int i = 0; i < n; ++i) {
         final Button hide = new Button("Hide " + (i+1));
-        hide.setOnAction(new HideChildAction(splitPane, i));
+        hide.setOnAction(new HideChildAction(pane, i));
         final Button show = new Button("Show " + (i+1));
-        show.setOnAction(new ShowChildAction(splitPane, i));
+        show.setOnAction(new ShowChildAction(pane, i));
         toolBar.getItems().addAll(hide, show);
       }
-      getChildren().addAll(splitPane, toolBar);
+
+      getChildren().addAll(pane, toolBar);
     }
   }
 

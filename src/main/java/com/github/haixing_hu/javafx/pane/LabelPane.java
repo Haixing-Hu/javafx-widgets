@@ -16,15 +16,15 @@ package com.github.haixing_hu.javafx.pane;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 
 /**
  * A simple {@link Pane} which displays a text in the center.
  *
  * @author Haixing Hu
  */
-public class LabelPane extends StackPane {
+public class LabelPane extends GridPane {
 
   /**
    * Creates a {@link LabelPane} which displays a text in the center.
