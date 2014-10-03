@@ -21,7 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -43,12 +43,13 @@ public class CardPaneTest extends Application {
   public void start(Stage primaryStage) throws Exception {
     final VBox root = new VBox();
     final CardPane pane = new CardPane();
-    final GridPane[] cards = new GridPane[CARD_COUNT];
     for (int i = 0; i < CARD_COUNT; ++i) {
-      cards[i] = new GridPane();
-      cards[i].getChildren().add(new Label("Card " + i));
-      pane.addCard(cards[i]);
+      final Pane child = new Pane();
+      child.getChildren().add(new Label("Card " + i));
+      child.setStyle("-fx-background-color:white");
+      pane.addCard(child);
     }
+    pane.setStyle("-fx-background-color: blue");
     VBox.setVgrow(pane, Priority.ALWAYS);
     root.getChildren().add(pane);
 

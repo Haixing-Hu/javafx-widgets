@@ -44,7 +44,7 @@ import javafx.scene.layout.Pane;
  *
  * @author Haixing Hu
  */
-public class CardPane extends Pane {
+public class CardPane extends FillPane {
 
   private final List<Node> cards;
   private int index;
@@ -242,8 +242,10 @@ public class CardPane extends Pane {
    *           if the index is out of bounds.
    */
   public void showCard(int index) {
-    final Node node = cards.get(index);
-    getChildren().setAll(node);
-    this.index = index;
+    if (this.index != index) {
+      final Node node = cards.get(index);
+      getChildren().setAll(node);
+      this.index = index;
+    }
   }
 }
