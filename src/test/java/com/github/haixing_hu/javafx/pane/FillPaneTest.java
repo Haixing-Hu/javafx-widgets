@@ -29,7 +29,7 @@ import javafx.stage.Stage;
  *
  * @author Haixing Hu
  */
-public class FillLayoutPaneTest extends Application {
+public class FillPaneTest extends Application {
 
   public static void main(String[] args) {
       launch(args);

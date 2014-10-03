@@ -4,15 +4,43 @@ This project provides some useful components for JavaFX.
 
 ## Widgets
 
-Currently the following widgets or components are supports:
+### Action
 
-* `Action`: An action can be used to separate functionality and state from a control. For example, if you have two or more controls that perform the same function and share the same state (enable, visible, select, graphic, text, style, etc), e.g., one in a `Menu` and another on a `ToolBar`, consider using a `Action` object to implement the function.
-* `ActionGroup`: It is a special kind of `Action`, which could contains sub-actions. The button created from an `ActionGroup` is a `MenuButton` or `SplitMenuButton`; and the menu item created from an `ActionGroup` is a `Menu`.
-* `ActionManager`: It could be used to manage all the actions in an application, and it provides convenient functions to access the properties of actions and create `MenuBar` or `ToolBar` from actions.
-* `LabelPane`: It is a very simple `Pane` which displays a text label on the center. It is usually used for testing layout.
-* `SplitPaneEx`: It is an extension of `SplitPane`, with the additional functions to hide or show its children. Note that due to the limitation of the `SplitPane` API, it's better to use `SplitPaneEx` with two children. If `SplitPaneEx` has more than two children, the size of the child after hidden and shown will be changed unexpectly.
-* `FillPane`: It is a pane implements the SWT's `FillLayout`.
-* `CardPane`: It is a simple pane providing the AWT's card layout or SWT's stack layout. JavaFX provides a `StackPane`, which at the first look is something like the `StackLayout` in SWT, but in fact it is totally different. The children added to a `StackPane` will overlap together, which is different from the SWT's `StackLayout`. The `CardPane` implements a pane similar to `CardLayout` or `StackLayout`, and it could be used to impelement a customized `TabPane` or `WizardPane`.
+An `Action` can be used to separate functionality and state from a control. For example, if you have two or more controls that perform the same function and share the same state (enable, visible, select, graphic, text, style, etc), e.g., one in a `Menu` and another on a `ToolBar`, consider using a `Action` object to implement the function.
+
+An important feature of `Actions` is, changing the properties (id, css style, text, description, graphic, enable, visible, etc) of an action will automatically changes the same properties of the widgets (buttons, menu items, etc) created from that action, and will automatically refreshes the GUI. Therefore, it very convenient to use actions to manage the behaviours of buttons and menu items in the applicaiton.
+
+The `ActionGroup` is a special kind of `Action`, which could contains sub-actions. The button created from an `ActionGroup` is a `MenuButton` or `SplitMenuButton`; and the menu item created from an `ActionGroup` is a `Menu`.
+
+The `ActionManager` could be used to manage all the actions in an application, and it provides convenient functions to access the properties of actions and create `MenuBar` or `ToolBar` from actions.
+
+### LabelPane
+
+A `LabelPane` is a trivial `Pane` which displays a text label on the center. It is usually used for testing layout.
+
+### SplitPaneEx
+
+The `SplitPaneEx` is an extension of `SplitPane`, with the additional functions to hide or show its children. 
+
+Note that due to the limitation of the `SplitPane` API, it's better to use `SplitPaneEx` with two children. If `SplitPaneEx` has more than two children, the size of the child after hidden and shown will be changed unexpectly.
+
+### FillPane
+
+A `FillPane` is a pane implements the SWT's `FillLayout`. It seems that there is a lack of some common layouts in JavaFX, therefore I have to write them by myself.
+
+### CardPane
+
+A `CardPane` is a simple pane providing the AWT's `CardLayout` or SWT's `StackLayout`. 
+
+JavaFX provides a `StackPane`, which at the first look is something like the `StackLayout` in SWT, but in fact it's a totally different thing. The children added to a `StackPane` will **overlap** together, which is not what we except in `StackLayout`. 
+
+The `CardPane` implements a pane similar to `CardLayout` or `StackLayout`, and it could be used to impelement a customized `TabPane` or `WizardPane`.
+
+### PopOver
+
+This is the `PopOver` control comes from [ControlFX](http://fxexperience.com/controlsfx/features/#popover), with a silghtly modification for personal use.
+
+### Others
 
 More widgets will be added when I need them :-)
 
