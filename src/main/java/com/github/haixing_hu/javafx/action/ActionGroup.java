@@ -255,7 +255,7 @@ public class ActionGroup extends AbstractAction {
     menu.visibleProperty().bindBidirectional(visible);
     menu.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
 
-    menu.getStyleClass().setAll(styleClass);
+    menu.getStyleClass().addAll(styleClass);
     menu.setOnAction(this);
 
     final ObservableList<MenuItem> menuItems = menu.getItems();
