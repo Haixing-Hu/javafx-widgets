@@ -17,7 +17,6 @@
  */
 package com.github.haixing_hu.javafx.action;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
@@ -28,6 +27,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
@@ -56,6 +56,7 @@ public abstract class AbstractAction implements IAction {
   protected DoubleProperty graphicTextGap;
 //  protected BooleanProperty disable;
   protected BooleanProperty visible;
+  protected BooleanProperty managed;
   protected BooleanProperty mnemonicParsing;
   protected BooleanProperty selected;
   protected BooleanProperty allowIndeterminate;
@@ -92,12 +93,13 @@ public abstract class AbstractAction implements IAction {
     contentDisplay = new SimpleObjectProperty<ContentDisplay>(this, "contentDisplay", ContentDisplay.LEFT);
     graphicTextGap = new SimpleDoubleProperty(this, "graphicTextGap", -1);
     visible = new SimpleBooleanProperty(this, "visibles", true);
+    managed = new SimpleBooleanProperty(this, "managed", true);
     mnemonicParsing = new SimpleBooleanProperty(this, "mnemonicParsing", true);
     selected = new SimpleBooleanProperty(this, "selected", false);
     allowIndeterminate = new SimpleBooleanProperty(this, "allowIndeterminate", false);
     indeterminate = new SimpleBooleanProperty(this, "indeterminate", false);
     visited = new SimpleBooleanProperty(this, "visited", false);
-    styleClass = new ArrayList<String>();
+    styleClass = FXCollections.<String>observableArrayList();
   }
 
   @Override
@@ -287,6 +289,21 @@ public abstract class AbstractAction implements IAction {
   }
 
   @Override
+  public final boolean isManaged() {
+    return managed.get();
+  }
+
+  @Override
+  public final void setManaged(boolean managed) {
+    this.managed.set(managed);
+  }
+
+  @Override
+  public final BooleanProperty managedProperty() {
+    return managed;
+  }
+
+  @Override
   public final boolean isMnemonicParsing() {
     return mnemonicParsing.get();
   }
@@ -364,5 +381,17 @@ public abstract class AbstractAction implements IAction {
   @Override
   public final List<String> getStyleClass() {
     return styleClass;
+  }
+
+  @Override
+  public final void hide() {
+    visible.set(false);
+    managed.set(false);
+  }
+
+  @Override
+  public final void show() {
+    visible.set(true);
+    managed.set(true);
   }
 }

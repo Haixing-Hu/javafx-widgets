@@ -154,9 +154,10 @@ public abstract class Action extends AbstractAction {
     }
 
     button.visibleProperty().bindBidirectional(visible);
+    button.managedProperty().bindBidirectional(managed);
     button.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
+    button.getStyleClass().setAll(styleClass);
 
-    button.getStyleClass().addAll(styleClass);
     button.setOnAction(this);
   }
 
@@ -233,7 +234,7 @@ public abstract class Action extends AbstractAction {
     item.visibleProperty().bindBidirectional(visible);
     item.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
 
-    item.getStyleClass().addAll(styleClass);
+    item.getStyleClass().setAll(styleClass);
     item.setOnAction(this);
   }
 

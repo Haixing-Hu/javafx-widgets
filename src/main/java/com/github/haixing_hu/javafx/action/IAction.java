@@ -27,6 +27,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
@@ -58,6 +59,11 @@ import javax.annotation.Nullable;
  * automatically changes the same properties of the widgets (buttons, menu
  * items, etc) created from that action, and will automatically refreshes the
  * GUI.
+ * <p>
+ * <b>NOTE: </b> In order to hide a button, it's not sufficient to set the
+ * {@code visible} property of the action creating the button to {@code false};
+ * the {@code managed} property of the action should also be set to
+ * {@code false}.
  *
  * @author Haixing Hu
  */
@@ -603,41 +609,117 @@ public interface IAction extends EventHandler<ActionEvent> {
   // public BooleanProperty disableProperty();
 
   /**
-   * Tests whether this action is visibles.
+   * Tests whether this action is visible.
    * <p>
    * The widgets (buttons, menu items, sub-menus, context menus, etc) created by
    * an invisible action will not be rendered as part of the scene graph.
    * <p>
    * The default value of this property is {@code true}.
    *
-   * @return whether this action is visibles.
+   * @return whether this action is visible.
    */
   public boolean isVisible();
 
   /**
-   * Sets the visibles property of this action.
+   * Sets the visible property of this action.
    * <p>
    * The widgets (buttons, menu items, sub-menus, context menus, etc) created by
    * an invisible action will not be rendered as part of the scene graph.
    * <p>
    * The default value of this property is {@code true}.
    *
-   * @param visibles
-   *          the new value to be set to the visibles property of this action.
+   * @param visible
+   *          the new value to be set to the visible property of this action.
    */
   public void setVisible(boolean visible);
 
   /**
-   * Gets the visibles property of this action.
+   * Gets the visible property of this action.
    * <p>
    * The widgets (buttons, menu items, sub-menus, context menus, etc) created by
    * an invisible action will not be rendered as part of the scene graph.
    * <p>
    * The default value of this property is {@code true}.
    *
-   * @return the visibles property of this action.
+   * @return the visible property of this action.
    */
   public BooleanProperty visibleProperty();
+
+  /**
+   * Tests whether this action is managed.
+   * <p>
+   * If a node is managed, it's parent will factor the node's geometry into its
+   * own preferred size and {@link #layoutBoundsProperty layoutBounds}
+   * calculations and will lay it out during the scene's layout pass. If a
+   * managed node's layoutBounds changes, it will automatically trigger
+   * re-layout up the scene-graph to the nearest layout root (which is typically
+   * the scene's root node).
+   * <p>
+   * If a node is unmanaged, its parent will ignore the child in both preferred
+   * size computations and layout. Changes in layoutBounds will not trigger
+   * re-layout above it. If an unmanaged node is of type
+   * {@link javafx.scene.Parent Parent}, it will act as a "layout root", meaning
+   * that calls to {@link Parent#requestLayout()} beneath it will cause only the
+   * branch rooted by the node to be relayed out, thereby isolating layout
+   * changes to that root and below. It's the application's responsibility to
+   * set the size and position of an unmanaged node.
+   * <p>
+   * The default value of this property is {@code true}.
+   *
+   * @return whether this action is managed.
+   */
+  public boolean isManaged();
+
+  /**
+   * Sets the managed property of this action.
+   * <p>
+   * If a node is managed, it's parent will factor the node's geometry into its
+   * own preferred size and {@link #layoutBoundsProperty layoutBounds}
+   * calculations and will lay it out during the scene's layout pass. If a
+   * managed node's layoutBounds changes, it will automatically trigger
+   * re-layout up the scene-graph to the nearest layout root (which is typically
+   * the scene's root node).
+   * <p>
+   * If a node is unmanaged, its parent will ignore the child in both preferred
+   * size computations and layout. Changes in layoutBounds will not trigger
+   * re-layout above it. If an unmanaged node is of type
+   * {@link javafx.scene.Parent Parent}, it will act as a "layout root", meaning
+   * that calls to {@link Parent#requestLayout()} beneath it will cause only the
+   * branch rooted by the node to be relayed out, thereby isolating layout
+   * changes to that root and below. It's the application's responsibility to
+   * set the size and position of an unmanaged node.
+   * <p>
+   * The default value of this property is {@code true}.
+   *
+   * @param managed
+   *          the new value to be set to the managed property of this action.
+   */
+  public void setManaged(boolean managed);
+
+  /**
+   * Gets the managed property of this action.
+   * <p>
+   * If a node is managed, it's parent will factor the node's geometry into its
+   * own preferred size and {@link #layoutBoundsProperty layoutBounds}
+   * calculations and will lay it out during the scene's layout pass. If a
+   * managed node's layoutBounds changes, it will automatically trigger
+   * re-layout up the scene-graph to the nearest layout root (which is typically
+   * the scene's root node).
+   * <p>
+   * If a node is unmanaged, its parent will ignore the child in both preferred
+   * size computations and layout. Changes in layoutBounds will not trigger
+   * re-layout above it. If an unmanaged node is of type
+   * {@link javafx.scene.Parent Parent}, it will act as a "layout root", meaning
+   * that calls to {@link Parent#requestLayout()} beneath it will cause only the
+   * branch rooted by the node to be relayed out, thereby isolating layout
+   * changes to that root and below. It's the application's responsibility to
+   * set the size and position of an unmanaged node.
+   * <p>
+   * The default value of this property is {@code true}.
+   *
+   * @return the managed property of this action.
+   */
+  public BooleanProperty managedProperty();
 
   /**
    * Tests whether this action is mnemonic parsing.
@@ -697,14 +779,9 @@ public interface IAction extends EventHandler<ActionEvent> {
 
   /**
    * Gets the style class of this action.
-   * <p>
-   * <b>NOTE:</b> once the menu item or button has been created from this
-   * action, its style class <b>will not</b> changed anymore with the changing
-   * of the style class of this action. This is due to the limitation of the
-   * JavaFX API.
    *
    * @return the list of names of the style class of this action, which cannot
-   *         be {@ink code null}.
+   *         be {@code null}.
    */
   public List<String> getStyleClass();
 
@@ -736,4 +813,19 @@ public interface IAction extends EventHandler<ActionEvent> {
    * @return the menu created from this action.
    */
   public Menu createMenu();
+
+  /**
+   * Hides this action.
+   * <p>
+   * Hiding an action will makes it in-visible and un-managed.
+   */
+  public void hide();
+
+  /**
+   * Shows this action.
+   * <p>
+   * Showing an action will makes it visible and managed.
+   */
+  public void show();
+
 }

@@ -282,6 +282,21 @@ public class SeparatorAction implements IAction {
   }
 
   @Override
+  public boolean isManaged() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setManaged(boolean managed) {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public BooleanProperty managedProperty() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public boolean isMnemonicParsing() {
     throw new UnsupportedOperationException();
   }
@@ -317,4 +332,13 @@ public class SeparatorAction implements IAction {
     throw new UnsupportedOperationException();
   }
 
+  @Override
+  public void hide() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void show() {
+    throw new UnsupportedOperationException();
+  }
 }

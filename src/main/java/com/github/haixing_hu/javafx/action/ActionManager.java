@@ -27,6 +27,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
@@ -895,7 +896,7 @@ public class ActionManager {
   }
 
   /**
-   * Tests whether this action is visibles.
+   * Tests whether this action is visible.
    * <p>
    * The widgets (buttons, menu items, sub-menus, context menus, etc) created by
    * an invisible action will not be rendered as part of the scene graph.
@@ -904,7 +905,7 @@ public class ActionManager {
    *
    * @param id
    *          the id of an action.
-   * @return whether this action is visibles.
+   * @return whether this action is visible.
    */
   public final boolean isVisible(String id) {
     final IAction action = map.get(id);
@@ -917,7 +918,7 @@ public class ActionManager {
   }
 
   /**
-   * Sets the visibles property of the specified action.
+   * Sets the visible property of the specified action.
    * <p>
    * The widgets (buttons, menu items, sub-menus, context menus, etc) created by
    * an invisible action will not be rendered as part of the scene graph.
@@ -926,8 +927,8 @@ public class ActionManager {
    *
    * @param id
    *          the id of an action.
-   * @param visibles
-   *          the new value to be set to the visibles property of the specified
+   * @param visible
+   *          the new value to be set to the visible property of the specified
    *          action.
    */
   public final void setVisible(String id, boolean visible) {
@@ -940,7 +941,7 @@ public class ActionManager {
   }
 
   /**
-   * Gets the visibles property of the specified action.
+   * Gets the visible property of the specified action.
    * <p>
    * The widgets (buttons, menu items, sub-menus, context menus, etc) created by
    * an invisible action will not be rendered as part of the scene graph.
@@ -949,7 +950,7 @@ public class ActionManager {
    *
    * @param id
    *          the id of an action.
-   * @return the visibles property of the specified action.
+   * @return the visible property of the specified action.
    */
   public final BooleanProperty visibleProperty(String id) {
     final IAction action = map.get(id);
@@ -960,6 +961,114 @@ public class ActionManager {
       return action.visibleProperty();
     }
   }
+
+
+  /**
+   * Tests whether the specified action is managed.
+   * <p>
+   * If a node is managed, it's parent will factor the node's geometry into its
+   * own preferred size and {@link #layoutBoundsProperty layoutBounds}
+   * calculations and will lay it out during the scene's layout pass. If a
+   * managed node's layoutBounds changes, it will automatically trigger
+   * re-layout up the scene-graph to the nearest layout root (which is typically
+   * the scene's root node).
+   * <p>
+   * If a node is unmanaged, its parent will ignore the child in both preferred
+   * size computations and layout. Changes in layoutBounds will not trigger
+   * re-layout above it. If an unmanaged node is of type
+   * {@link javafx.scene.Parent Parent}, it will act as a "layout root", meaning
+   * that calls to {@link Parent#requestLayout()} beneath it will cause only the
+   * branch rooted by the node to be relayed out, thereby isolating layout
+   * changes to that root and below. It's the application's responsibility to
+   * set the size and position of an unmanaged node.
+   * <p>
+   * The default value of this property is {@code true}.
+   *
+   * @param id
+   *          the id of an action.
+   * @return whether the specified action is managed.
+   */
+  public boolean isManaged(String id) {
+    final IAction action = map.get(id);
+    if (action == null) {
+      logger.error("Unknown action id: {}", id);
+      return true;
+    } else {
+      return action.isManaged();
+    }
+  }
+
+  /**
+   * Sets the managed property of the specified action.
+   * <p>
+   * If a node is managed, it's parent will factor the node's geometry into its
+   * own preferred size and {@link #layoutBoundsProperty layoutBounds}
+   * calculations and will lay it out during the scene's layout pass. If a
+   * managed node's layoutBounds changes, it will automatically trigger
+   * re-layout up the scene-graph to the nearest layout root (which is typically
+   * the scene's root node).
+   * <p>
+   * If a node is unmanaged, its parent will ignore the child in both preferred
+   * size computations and layout. Changes in layoutBounds will not trigger
+   * re-layout above it. If an unmanaged node is of type
+   * {@link javafx.scene.Parent Parent}, it will act as a "layout root", meaning
+   * that calls to {@link Parent#requestLayout()} beneath it will cause only the
+   * branch rooted by the node to be relayed out, thereby isolating layout
+   * changes to that root and below. It's the application's responsibility to
+   * set the size and position of an unmanaged node.
+   * <p>
+   * The default value of this property is {@code true}.
+   *
+   * @param id
+   *          the id of an action.
+   * @param managed
+   *          the new value to be set to the managed property of the specified
+   *          action.
+   */
+  public void setManaged(String id, boolean managed) {
+    final IAction action = map.get(id);
+    if (action == null) {
+      logger.error("Unknown action id: {}", id);
+    } else {
+      action.setManaged(managed);
+    }
+  }
+
+  /**
+   * Gets the managed property of the specified action.
+   * <p>
+   * If a node is managed, it's parent will factor the node's geometry into its
+   * own preferred size and {@link #layoutBoundsProperty layoutBounds}
+   * calculations and will lay it out during the scene's layout pass. If a
+   * managed node's layoutBounds changes, it will automatically trigger
+   * re-layout up the scene-graph to the nearest layout root (which is typically
+   * the scene's root node).
+   * <p>
+   * If a node is unmanaged, its parent will ignore the child in both preferred
+   * size computations and layout. Changes in layoutBounds will not trigger
+   * re-layout above it. If an unmanaged node is of type
+   * {@link javafx.scene.Parent Parent}, it will act as a "layout root", meaning
+   * that calls to {@link Parent#requestLayout()} beneath it will cause only the
+   * branch rooted by the node to be relayed out, thereby isolating layout
+   * changes to that root and below. It's the application's responsibility to
+   * set the size and position of an unmanaged node.
+   * <p>
+   * The default value of this property is {@code true}.
+   *
+   * @param id
+   *          the id of an action.
+   * @return the managed property of the specified action.
+   */
+  public BooleanProperty managedProperty(String id) {
+    final IAction action = map.get(id);
+    if (action == null) {
+      logger.error("Unknown action id: {}", id);
+      return null;
+    } else {
+      return action.managedProperty();
+    }
+  }
+
 
   /**
    * Tests whether this action is mnemonic parsing.
@@ -1196,6 +1305,42 @@ public class ActionManager {
       }
     }
     return toolBar;
+  }
+
+  /**
+   * Hides an action.
+   * <p>
+   * Hiding an action will makes it in-visible and un-managed.
+   *
+   * @param id
+   *    the id of an action.
+   */
+  public final void hide(String id) {
+    final IAction action = map.get(id);
+    if (action == null) {
+      logger.error("Unknown action id: {}", id);
+    } else {
+      action.setVisible(false);
+      action.setManaged(false);
+    }
+  }
+
+  /**
+   * Shows an action.
+   * <p>
+   * Showing an action will makes it visible and managed.
+   *
+   * @param id
+   *    the id of an action.
+   */
+  public final void show(String id) {
+    final IAction action = map.get(id);
+    if (action == null) {
+      logger.error("Unknown action id: {}", id);
+    } else {
+      action.setVisible(true);
+      action.setManaged(true);
+    }
   }
 
 }

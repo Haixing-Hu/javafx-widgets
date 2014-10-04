@@ -40,6 +40,14 @@ The `CardPane` implements a pane similar to `CardLayout` or `StackLayout`, and i
 
 This is the `PopOver` control comes from [ControlFX](http://fxexperience.com/controlsfx/features/#popover), with a silghtly modification for personal use.
 
+### NoArrowMenuButton
+
+This is an extension of `MenuButton` but without the context menu arrow. 
+
+Although it's possible to use CSS styling hack to get rid of the context menu arrow of a menu button, but chaning the default style could affect the appearance of other components, such as `Menu` and `MenuBar`. Therfore, I hack the source code of `MenuButton` and create a `NoArrowMenuButton` control. 
+
+Note that due to the access limitation of Sun's internal packages, the context menu of `NoArrowMenuButton` cannot support the mnemonics. Also, the code **may be broken** due to the changes of impelementation details in the future version of JDK.
+
 ### Others
 
 More widgets will be added when I need them :-)
@@ -48,8 +56,8 @@ More widgets will be added when I need them :-)
 
 The project depends on the following projects of mine:
 
-* [pom-root](https://github.com/Haixing-Hu/pom-root)
-* [Java-Commons](https://github.com/Haixing-Hu/commons)
+* [pom-root](https://github.com/Haixing-Hu/pom-root): which provides configuration of dependent packages for all projects.
+* [java-commons](https://github.com/Haixing-Hu/commons): which provides commonly used classes and functions for my personal Java programming.
 
 ## Build
 

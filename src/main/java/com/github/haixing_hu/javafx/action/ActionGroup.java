@@ -36,6 +36,7 @@ import javafx.scene.control.Tooltip;
 
 import javax.annotation.Nullable;
 
+import com.github.haixing_hu.javafx.control.menubutton.NoArrowMenuButton;
 import com.github.haixing_hu.lang.Argument;
 
 /**
@@ -168,7 +169,12 @@ public class ActionGroup extends AbstractAction {
       }
       case ActionOption.MENU_BUTTON:
       default: {
-        final MenuButton button = new MenuButton();
+        final MenuButton button;
+        if ((options & ActionOption.NO_ARROW) == 0) {
+          button = new MenuButton();
+        } else {
+          button = new NoArrowMenuButton();
+        }
         configMenuButton(button);
         return button;
       }
@@ -204,6 +210,7 @@ public class ActionGroup extends AbstractAction {
       button.graphicTextGapProperty().bindBidirectional(graphicTextGap);
     }
     button.visibleProperty().bindBidirectional(visible);
+    button.managedProperty().bindBidirectional(managed);
     button.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
 
     button.getStyleClass().addAll(styleClass);
@@ -248,7 +255,7 @@ public class ActionGroup extends AbstractAction {
     menu.visibleProperty().bindBidirectional(visible);
     menu.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
 
-    menu.getStyleClass().addAll(styleClass);
+    menu.getStyleClass().setAll(styleClass);
     menu.setOnAction(this);
 
     final ObservableList<MenuItem> menuItems = menu.getItems();

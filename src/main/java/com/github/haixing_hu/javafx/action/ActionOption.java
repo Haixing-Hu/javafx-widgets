@@ -27,6 +27,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.SplitMenuButton;
 
+import com.github.haixing_hu.javafx.control.menubutton.NoArrowMenuButton;
+
 /**
  * Defines the bit masks of options for actions.
  *
@@ -135,6 +137,12 @@ public interface ActionOption {
    * the action should be appended with a "...".
    */
   public static final int SHOW_DIALOG = 0x00010000;
+
+  /**
+   * Indicates that the action should create a menu button without the context
+   * menu arrow, i.e, a {@link NoArrowMenuButton}.
+   */
+  public static final int NO_ARROW = 0x00020000;
 
   /**
    * The default options for actions.
