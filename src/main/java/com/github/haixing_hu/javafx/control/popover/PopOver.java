@@ -48,6 +48,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.PopupControl;
 import javafx.scene.control.Skin;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -75,6 +76,8 @@ import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
  * <center> <img src="popover-accordion.png"/> </center> <br>
  */
 public class PopOver extends PopupControl {
+
+  private static final int DEFAULT_OFFSET = 4;
 
   private static final String DEFAULT_STYLE_CLASS = "popover"; //$NON-NLS-1$
 
@@ -233,7 +236,7 @@ public class PopOver extends PopupControl {
    *          the owner of the pop over
    */
   public final void show(Node owner) {
-    show(owner, 4);
+    show(owner, DEFAULT_OFFSET);
   }
 
   /**
@@ -430,67 +433,68 @@ public class PopOver extends PopupControl {
   }
 
   private void adjustWindowLocation() {
-    final Bounds bounds = PopOver.this.getSkin().getNode().getBoundsInParent();
+    final StackPane skinRoot = (StackPane) PopOver.this.getSkin().getNode();
+    final Bounds skinBounds = skinRoot.getBoundsInParent();
+    final Node contentNode = skinRoot.getChildren().get(1);
+    final Bounds contentBounds = contentNode.getBoundsInParent();
 
     switch (getArrowLocation()) {
       case TOP_CENTER:
       case TOP_LEFT:
       case TOP_RIGHT:
-        setX((getX() + bounds.getMinX()) - computeXOffset());
-        setY(getY() + bounds.getMinY() + getArrowSize());
+        setX((getX() + skinBounds.getMinX()) - computeXOffset(contentBounds));
+        setY(getY() + skinBounds.getMinY() + getArrowSize());
         break;
       case LEFT_TOP:
       case LEFT_CENTER:
       case LEFT_BOTTOM:
-        setX(getX() + bounds.getMinX() + getArrowSize());
-        setY((getY() + bounds.getMinY()) - computeYOffset());
+        setX(getX() + skinBounds.getMinX() + getArrowSize());
+        setY((getY() + skinBounds.getMinY()) - computeYOffset(contentBounds));
         break;
       case BOTTOM_CENTER:
       case BOTTOM_LEFT:
       case BOTTOM_RIGHT:
-        setX((getX() + bounds.getMinX()) - computeXOffset());
-        setY(getY() - bounds.getMinY() - bounds.getMaxY() - 1);
+        setX((getX() + skinBounds.getMinX()) - computeXOffset(contentBounds));
+        setY(getY() - skinBounds.getMinY() - skinBounds.getMaxY() - 1);
         break;
       case RIGHT_TOP:
       case RIGHT_BOTTOM:
       case RIGHT_CENTER:
-        setX(getX() - bounds.getMinX() - bounds.getMaxX() - 1);
-        setY((getY() + bounds.getMinY()) - computeYOffset());
+        setX(getX() - skinBounds.getMinX() - skinBounds.getMaxX() - 1);
+        setY((getY() + skinBounds.getMinY()) - computeYOffset(contentBounds));
         break;
     }
   }
 
-  private double computeXOffset() {
+  private double computeXOffset(Bounds contentBounds) {
     switch (getArrowLocation()) {
       case TOP_LEFT:
       case BOTTOM_LEFT:
         return getCornerRadius() + getArrowIndent() + getArrowSize();
       case TOP_CENTER:
       case BOTTOM_CENTER:
-        return getContentNode().prefWidth(- 1) / 2;
+        return contentBounds.getWidth() / 2;
       case TOP_RIGHT:
       case BOTTOM_RIGHT:
-        return getContentNode().prefWidth(- 1) - getArrowIndent()
+        return contentBounds.getWidth() - getArrowIndent()
             - getCornerRadius() - getArrowSize();
       default:
         return 0;
     }
   }
 
-  private double computeYOffset() {
-    final double prefContentHeight = getContentNode().prefHeight(- 1);
-
+  private double computeYOffset(Bounds contentBounds) {
     switch (getArrowLocation()) {
       case LEFT_TOP:
       case RIGHT_TOP:
         return getCornerRadius() + getArrowIndent() + getArrowSize();
       case LEFT_CENTER:
       case RIGHT_CENTER:
-        return Math.max(prefContentHeight, 2 * (getCornerRadius()
+        return Math.max(contentBounds.getHeight(), 2 * (getCornerRadius()
             + getArrowIndent() + getArrowSize())) / 2;
       case LEFT_BOTTOM:
       case RIGHT_BOTTOM:
-        return Math.max(prefContentHeight - getCornerRadius()
+        return Math.max(contentBounds.getHeight() - getCornerRadius()
             - getArrowIndent() - getArrowSize(), getCornerRadius()
             + getArrowIndent() + getArrowSize());
       default:

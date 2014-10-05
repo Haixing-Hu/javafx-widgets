@@ -10,6 +10,7 @@
 }
 
 .popover > .content {
+	-fx-padding: 10;
 }
 
 .popover > .detached {

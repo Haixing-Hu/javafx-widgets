@@ -80,7 +80,11 @@ public class ActionManager {
   }
 
   public final void add(IAction action) {
-    map.put(action.getId(), action);
+    final String id = action.getId();
+    if (map.containsKey(id)) {
+      logger.warn("The action already exists: {}", id);
+    }
+    map.put(id, action);
   }
 
   public final IAction remove(String id) {
