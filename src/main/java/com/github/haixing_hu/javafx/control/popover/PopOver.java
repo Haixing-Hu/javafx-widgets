@@ -24,6 +24,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+
+/******************************************************************************
+ *
+ * Copyright (c) 2014  Haixing Hu
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     ControlsFX -  Initial implementation and API.
+ *     Haixing Hu (https://github.com/Haixing-Hu/) - Fix bugs and add features.
+ *
+ ******************************************************************************/
+
 package com.github.haixing_hu.javafx.control.popover;
 
 import javafx.animation.FadeTransition;
@@ -52,6 +69,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+
+import javax.annotation.Nullable;
 
 import static java.util.Objects.requireNonNull;
 
@@ -174,7 +193,7 @@ public class PopOver extends PopupControl {
    * @see #contentNodeProperty()
    */
   public final Node getContentNode() {
-    return contentNodeProperty().get();
+    return contentNode.get();
   }
 
   /**
@@ -186,7 +205,7 @@ public class PopOver extends PopupControl {
    * @see #contentNodeProperty()
    */
   public final void setContentNode(Node content) {
-    contentNodeProperty().set(content);
+    contentNode.set(content);
   }
 
   private final InvalidationListener hideListener = new InvalidationListener() {
@@ -198,8 +217,8 @@ public class PopOver extends PopupControl {
     }
   };
 
-  private final WeakInvalidationListener weakHideListener = new WeakInvalidationListener(
-      hideListener);
+  private final WeakInvalidationListener weakHideListener =
+      new WeakInvalidationListener(hideListener);
 
   private final ChangeListener<Number> xListener = new ChangeListener<Number>() {
     @Override
@@ -209,8 +228,8 @@ public class PopOver extends PopupControl {
     }
   };
 
-  private final WeakChangeListener<Number> weakXListener = new WeakChangeListener<>(
-      xListener);
+  private final WeakChangeListener<Number> weakXListener =
+      new WeakChangeListener<>(xListener);
 
   private final ChangeListener<Number> yListener = new ChangeListener<Number>() {
     @Override
@@ -220,8 +239,8 @@ public class PopOver extends PopupControl {
     }
   };
 
-  private final WeakChangeListener<Number> weakYListener = new WeakChangeListener<>(
-      yListener);
+  private final WeakChangeListener<Number> weakYListener =
+      new WeakChangeListener<>(yListener);
 
   private Window ownerWindow;
 
@@ -533,7 +552,7 @@ public class PopOver extends PopupControl {
    * @see #detachableProperty()
    */
   public final void setDetachable(boolean detachable) {
-    detachableProperty().set(detachable);
+    this.detachable.set(detachable);
   }
 
   /**
@@ -544,7 +563,7 @@ public class PopOver extends PopupControl {
    * @see #detachableProperty()
    */
   public final boolean isDetachable() {
-    return detachableProperty().get();
+    return detachable.get();
   }
 
   private final BooleanProperty detached = new SimpleBooleanProperty(this,
@@ -570,7 +589,7 @@ public class PopOver extends PopupControl {
    * @see #detachedProperty()
    */
   public final void setDetached(boolean detached) {
-    detachedProperty().set(detached);
+    this.detached.set(detached);
   }
 
   /**
@@ -581,7 +600,7 @@ public class PopOver extends PopupControl {
    * @see #detachedProperty()
    */
   public final boolean isDetached() {
-    return detachedProperty().get();
+    return detached.get();
   }
 
   // arrow size support
@@ -608,19 +627,19 @@ public class PopOver extends PopupControl {
    * @see #arrowSizeProperty()
    */
   public final double getArrowSize() {
-    return arrowSizeProperty().get();
+    return arrowSize.get();
   }
 
   /**
    * Sets the value of the arrow size property.
    *
-   * @param size
+   * @param arrowSize
    *          the new value of the arrow size property
    *
    * @see #arrowSizeProperty()
    */
-  public final void setArrowSize(double size) {
-    arrowSizeProperty().set(size);
+  public final void setArrowSize(double arrowSize) {
+    this.arrowSize.set(arrowSize);
   }
 
   // arrow indent support
@@ -634,7 +653,7 @@ public class PopOver extends PopupControl {
    * Controls the distance between the arrow and the corners of the pop over.
    * The default value is 12.
    *
-   * @return the arrow indent property
+   * @return the arrow indent property.
    */
   public final DoubleProperty arrowIndentProperty() {
     return arrowIndent;
@@ -643,24 +662,24 @@ public class PopOver extends PopupControl {
   /**
    * Returns the value of the arrow indent property.
    *
-   * @return the arrow indent value
+   * @return the arrow indent value.
    *
    * @see #arrowIndentProperty()
    */
   public final double getArrowIndent() {
-    return arrowIndentProperty().get();
+    return arrowIndent.get();
   }
 
   /**
    * Sets the value of the arrow indent property.
    *
-   * @param size
-   *          the arrow indent value
+   * @param arrowIndent
+   *          the arrow indent value.
    *
    * @see #arrowIndentProperty()
    */
-  public final void setArrowIndent(double size) {
-    arrowIndentProperty().set(size);
+  public final void setArrowIndent(double arrowIndent) {
+    this.arrowIndent.set(arrowIndent);
   }
 
   // radius support
@@ -687,64 +706,62 @@ public class PopOver extends PopupControl {
    * @see #cornerRadiusProperty()
    */
   public final double getCornerRadius() {
-    return cornerRadiusProperty().get();
+    return cornerRadius.get();
   }
 
   /**
    * Sets the value of the corner radius property.
    *
-   * @param radius
+   * @param cornerRadius
    *          the corner radius
-   *
    * @see #cornerRadiusProperty()
    */
-  public final void setCornerRadius(double radius) {
-    cornerRadiusProperty().set(radius);
+  public final void setCornerRadius(double cornerRadius) {
+    this.cornerRadius.set(cornerRadius);
   }
 
-  // Detached stage title
+  // Pop over window title
 
-  private final StringProperty detachedTitle = new SimpleStringProperty(this,
-      "detachedTitle", "Info"); //$NON-NLS-1$ //$NON-NLS-2$
+  private final StringProperty title = new SimpleStringProperty(this,
+      "title", null);
 
   /**
-   * Stores the title to display when the pop over becomes detached.
+   * Stores the title of the pop over window.
+   * <p>
+   * Default value of this property is {@code null}.
    *
-   * @return the detached title property
+   * @return the title property.
    */
-  public final StringProperty detachedTitleProperty() {
-    return detachedTitle;
+  public final StringProperty titleProperty() {
+    return title;
   }
 
   /**
-   * Returns the value of the detached title property.
+   * Gets the title of the pop over window.
+   * <p>
+   * Default value of this property is {@code null}.
    *
-   * @return the detached title
-   *
-   * @see #detachedTitleProperty()
+   * @return the title of the pop over window.
+   * @see #titleProperty()
    */
-  public final String getDetachedTitle() {
-    return detachedTitleProperty().get();
+  public final String getTitle() {
+    return title.get();
   }
 
   /**
-   * Sets the value of the detached title property.
+   * Sets the title of the pop over window.
    *
    * @param title
-   *          the title to use when detached
-   *
-   * @see #detachedTitleProperty()
+   *          the title of the pop over window, or null if the pop over window
+   *          has no title.
+   * @see #titleProperty()
    */
-  public final void setDetachedTitle(String title) {
-    if (title == null) {
-      throw new IllegalArgumentException("title can not be null"); //$NON-NLS-1$
-    }
-
-    detachedTitleProperty().set(title);
+  public final void setTitle(@Nullable String title) {
+    this.title.set(title);
   }
 
-  private final ObjectProperty<ArrowLocation> arrowLocation = new SimpleObjectProperty<>(
-      this, "arrowLocation", ArrowLocation.LEFT_TOP); //$NON-NLS-1$
+  private final ObjectProperty<ArrowLocation> arrowLocation =
+      new SimpleObjectProperty<>(this, "arrowLocation", ArrowLocation.LEFT_TOP);
 
   /**
    * Stores the preferred arrow location. This might not be the actual location
@@ -763,11 +780,11 @@ public class PopOver extends PopupControl {
    *
    * @see #arrowLocationProperty()
    *
-   * @param location
+   * @param arrowLocation
    *          the requested location
    */
-  public final void setArrowLocation(ArrowLocation location) {
-    arrowLocationProperty().set(location);
+  public final void setArrowLocation(ArrowLocation arrowLocation) {
+    this.arrowLocation.set(arrowLocation);
   }
 
   /**
@@ -778,6 +795,6 @@ public class PopOver extends PopupControl {
    * @return the preferred arrow location
    */
   public final ArrowLocation getArrowLocation() {
-    return arrowLocationProperty().get();
+    return arrowLocation.get();
   }
 }

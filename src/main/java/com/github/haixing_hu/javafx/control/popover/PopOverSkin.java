@@ -24,6 +24,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+/******************************************************************************
+ *
+ * Copyright (c) 2014  Haixing Hu
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     ControlsFX -  Initial implementation and API.
+ *     Haixing Hu (https://github.com/Haixing-Hu/) - Fix bugs and add features.
+ *
+ ******************************************************************************/
+
 package com.github.haixing_hu.javafx.control.popover;
 
 import java.net.URL;
@@ -57,7 +73,7 @@ import javafx.stage.Window;
 
 import static java.lang.Double.MAX_VALUE;
 
-import static javafx.geometry.Pos.CENTER_LEFT;
+import static javafx.geometry.Pos.CENTER_RIGHT;
 import static javafx.scene.control.ContentDisplay.GRAPHIC_ONLY;
 
 import static com.github.haixing_hu.javafx.control.popover.ArrowLocation.*;
@@ -109,7 +125,7 @@ public class PopOverSkin implements Skin<PopOver> {
     stackPane.minHeightProperty().bind(stackPane.minWidthProperty());
 
     title = new Label();
-    title.textProperty().bind(popOver.detachedTitleProperty());
+    title.textProperty().bind(popOver.titleProperty());
     title.setMaxSize(MAX_VALUE, MAX_VALUE);
     title.setAlignment(Pos.CENTER);
     title.getStyleClass().add("text"); //$NON-NLS-1$
@@ -120,7 +136,7 @@ public class PopOverSkin implements Skin<PopOver> {
     closeIcon.setContentDisplay(GRAPHIC_ONLY);
     closeIcon.visibleProperty().bind(popOver.detachedProperty());
     closeIcon.getStyleClass().add("icon"); //$NON-NLS-1$
-    closeIcon.setAlignment(CENTER_LEFT);
+    closeIcon.setAlignment(CENTER_RIGHT);
     closeIcon.getGraphic().setOnMouseClicked(evt -> popOver.hide());
 
     titlePane = new StackPane();
@@ -136,6 +152,8 @@ public class PopOverSkin implements Skin<PopOver> {
       content.setTop(titlePane);
       popOver.getStyleClass().add(DETACHED_STYLE_CLASS);
       content.getStyleClass().add(DETACHED_STYLE_CLASS);
+    } else if ((title.getText() != null) && (title.getText().length() > 0)) {
+      content.setTop(titlePane);
     }
 
     final InvalidationListener updatePathListener = observable -> updatePath();

@@ -17,12 +17,11 @@
  */
 package com.github.haixing_hu.javafx.action;
 
-import java.util.List;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -313,7 +312,7 @@ public class SeparatorAction implements IAction {
   }
 
   @Override
-  public List<String> getStyleClass() {
+  public ObservableList<String> getStyleClass() {
     throw new UnsupportedOperationException();
   }
 
@@ -339,6 +338,16 @@ public class SeparatorAction implements IAction {
 
   @Override
   public void show() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean isBindStyleClass() {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setBindStyleClass(boolean bindStyleClass) {
     throw new UnsupportedOperationException();
   }
 }

@@ -17,8 +17,6 @@
  */
 package com.github.haixing_hu.javafx.action;
 
-import java.util.List;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -28,6 +26,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
@@ -62,7 +61,8 @@ public abstract class AbstractAction implements IAction {
   protected BooleanProperty allowIndeterminate;
   protected BooleanProperty indeterminate;
   protected BooleanProperty visited;
-  protected List<String> styleClass;
+  protected ObservableList<String> styleClass;
+  protected boolean bindStyleClass;
 
   /**
    * Constructs an {@link AbstractAction}.
@@ -100,6 +100,7 @@ public abstract class AbstractAction implements IAction {
     indeterminate = new SimpleBooleanProperty(this, "indeterminate", false);
     visited = new SimpleBooleanProperty(this, "visited", false);
     styleClass = FXCollections.<String>observableArrayList();
+    bindStyleClass = false;
   }
 
   @Override
@@ -379,7 +380,7 @@ public abstract class AbstractAction implements IAction {
   }
 
   @Override
-  public final List<String> getStyleClass() {
+  public final ObservableList<String> getStyleClass() {
     return styleClass;
   }
 
@@ -393,5 +394,16 @@ public abstract class AbstractAction implements IAction {
   public final void show() {
     visible.set(true);
     managed.set(true);
+  }
+
+
+  @Override
+  public boolean isBindStyleClass() {
+    return bindStyleClass;
+  }
+
+  @Override
+  public void setBindStyleClass(boolean bindStyleClass) {
+    this.bindStyleClass = bindStyleClass;
   }
 }

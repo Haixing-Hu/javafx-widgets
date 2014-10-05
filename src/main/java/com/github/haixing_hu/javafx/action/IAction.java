@@ -17,12 +17,11 @@
  */
 package com.github.haixing_hu.javafx.action;
 
-import java.util.List;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -783,7 +782,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * @return the list of names of the style class of this action, which cannot
    *         be {@code null}.
    */
-  public List<String> getStyleClass();
+  public ObservableList<String> getStyleClass();
 
   /**
    * Creates a button from this action.
@@ -828,4 +827,46 @@ public interface IAction extends EventHandler<ActionEvent> {
    */
   public void show();
 
+  /**
+   * Tests whether this action will bind its style class property with the style
+   * class property of the button or menu item created from it.
+   * <p>
+   * The default value of this property is {@code false}.
+   * <p>
+   * Sometime it's convenient to bind the style class of an action to that of
+   * the button or menu item created from the action, such that changing the
+   * style class of an action could also change the style class of the button or
+   * menu item created from the action, hence avoid the button or menu item node
+   * looking up. But it must be <b>very carefully</b> to set this property to
+   * {@code true}, since if this action will create a button and a menu item,
+   * binding the style class of the button and menu item to this action will
+   * confuse the style classes of the button and the menu item.
+   *
+   * @return {@code true} if this action will bind its style class property with
+   *         the style class property of the button or menu item created from
+   *         it; {@code false} otherwise.
+   */
+  public boolean isBindStyleClass();
+
+  /**
+   * Sets whether this action will bind its style class property with the style
+   * class property of the button or menu item created from it.
+   * <p>
+   * The default value of this property is {@code false}.
+   * <p>
+   * Sometime it's convenient to bind the style class of an action to that of
+   * the button or menu item created from the action, such that changing the
+   * style class of an action could also change the style class of the button or
+   * menu item created from the action, hence avoid the button or menu item node
+   * looking up. But it must be <b>very carefully</b> to set this property to
+   * {@code true}, since if this action will create a button and a menu item,
+   * binding the style class of the button and menu item to this action will
+   * confuse the style classes of the button and the menu item.
+   *
+   * @param bindStyleClass
+   *          {@code true} to make this action will bind its style class
+   *          property with the style class property of the button or menu item
+   *          created from it; {@code false} otherwise.
+   */
+  public void setBindStyleClass(boolean bindStyleClass);
 }

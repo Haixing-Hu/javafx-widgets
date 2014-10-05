@@ -34,6 +34,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -51,6 +53,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
@@ -66,9 +69,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import com.github.haixing_hu.javafx.control.popover.ArrowLocation;
-import com.github.haixing_hu.javafx.control.popover.PopOver;
-
 public class PopOverTest extends Application {
 
   private PopOver popOver;
@@ -76,6 +76,7 @@ public class PopOverTest extends Application {
   private DoubleProperty masterArrowIndent;
   private DoubleProperty masterCornerRadius;
   private ObjectProperty<ArrowLocation> masterArrowLocation;
+  private StringProperty masterTitle;
   private double targetX;
   private double targetY;
   private CheckBox detached;
@@ -118,6 +119,7 @@ public class PopOverTest extends Application {
     masterArrowIndent = new SimpleDoubleProperty(12);
     masterCornerRadius = new SimpleDoubleProperty(6);
     masterArrowLocation = new SimpleObjectProperty<>(ArrowLocation.LEFT_TOP);
+    masterTitle = new SimpleStringProperty();
 
     rect.setOnScroll(new EventHandler<ScrollEvent>() {
       @Override
@@ -144,6 +146,7 @@ public class PopOverTest extends Application {
           targetY = evt.getScreenY();
 
           popOver = createPopOver();
+
 
           final double size = 3;
           line1.setStartX(evt.getX() - size);
@@ -201,6 +204,10 @@ public class PopOverTest extends Application {
     masterCornerRadius.bind(cornerRadius.valueProperty());
     GridPane.setFillWidth(cornerRadius, true);
 
+    final TextField title = new TextField();
+    masterTitle.bind(title.textProperty());
+    GridPane.setFillWidth(title, true);
+
     final GridPane controls = new GridPane();
     controls.setHgap(10);
     controls.setVgap(10);
@@ -208,29 +215,35 @@ public class PopOverTest extends Application {
     BorderPane.setMargin(controls, new Insets(10));
     BorderPane.setAlignment(controls, Pos.BOTTOM_CENTER);
 
+    final Label titleLabel = new Label("Title:");
+    GridPane.setHalignment(titleLabel, HPos.RIGHT);
+    controls.add(titleLabel, 0, 0);
+    controls.add(title, 1, 0);
+
+
     final Label arrowSizeLabel = new Label("Arrow Size:");
     GridPane.setHalignment(arrowSizeLabel, HPos.RIGHT);
-    controls.add(arrowSizeLabel, 0, 0);
-    controls.add(arrowSize, 1, 0);
+    controls.add(arrowSizeLabel, 0, 1);
+    controls.add(arrowSize, 1, 1);
 
     final Label arrowIndentLabel = new Label("Arrow Indent:");
     GridPane.setHalignment(arrowIndentLabel, HPos.RIGHT);
-    controls.add(arrowIndentLabel, 0, 1);
-    controls.add(arrowIndent, 1, 1);
+    controls.add(arrowIndentLabel, 0, 2);
+    controls.add(arrowIndent, 1, 2);
 
     final Label cornerRadiusLabel = new Label("Corner Radius:");
     GridPane.setHalignment(cornerRadiusLabel, HPos.RIGHT);
-    controls.add(cornerRadiusLabel, 0, 2);
-    controls.add(cornerRadius, 1, 2);
+    controls.add(cornerRadiusLabel, 0, 3);
+    controls.add(cornerRadius, 1, 3);
 
     final Label arrowSizeValue = new Label();
-    controls.add(arrowSizeValue, 2, 0);
+    controls.add(arrowSizeValue, 2, 1);
 
     final Label arrowIndentValue = new Label();
-    controls.add(arrowIndentValue, 2, 1);
+    controls.add(arrowIndentValue, 2, 2);
 
     final Label cornerRadiusValue = new Label();
-    controls.add(cornerRadiusValue, 2, 2);
+    controls.add(cornerRadiusValue, 2, 3);
 
     arrowSize.valueProperty().addListener(new ChangeListener<Number>() {
       @Override
@@ -261,26 +274,26 @@ public class PopOverTest extends Application {
 
     final Label arrowLocationLabel = new Label("Arrow Location:");
     GridPane.setHalignment(arrowLocationLabel, HPos.RIGHT);
-    controls.add(arrowLocationLabel, 0, 3);
+    controls.add(arrowLocationLabel, 0, 4);
 
     final ComboBox<ArrowLocation> locationBox = new ComboBox<>();
     locationBox.getItems().addAll(ArrowLocation.values());
     locationBox.setValue(ArrowLocation.TOP_CENTER);
     Bindings
         .bindBidirectional(masterArrowLocation, locationBox.valueProperty());
-    controls.add(locationBox, 1, 3);
+    controls.add(locationBox, 1, 4);
 
     detachable = new CheckBox("Detachable");
     detachable.setSelected(true);
-    controls.add(detachable, 0, 4);
+    controls.add(detachable, 0, 5);
     GridPane.setColumnSpan(detachable, 2);
 
     detached = new CheckBox("Initially detached");
-    controls.add(detached, 0, 5);
+    controls.add(detached, 0, 6);
     GridPane.setColumnSpan(detached, 2);
 
     autoPosition = new CheckBox("Auto Position");
-    controls.add(autoPosition, 0, 6);
+    controls.add(autoPosition, 0, 7);
     GridPane.setColumnSpan(autoPosition, 2);
 
     autoPosition.setOnAction(evt -> {
@@ -305,6 +318,7 @@ public class PopOverTest extends Application {
     popOver.arrowIndentProperty().bind(masterArrowIndent);
     popOver.arrowLocationProperty().bind(masterArrowLocation);
     popOver.cornerRadiusProperty().bind(masterCornerRadius);
+    popOver.titleProperty().bind(masterTitle);
     return popOver;
   }
 
@@ -355,25 +369,6 @@ public class PopOverTest extends Application {
       final Label sampleName = new Label(sample.getSampleName());
       sampleName.getStyleClass().add("sample-name");
       rightPanel.getChildren().add(sampleName);
-
-      // --- project name & version
-//      String version = sample.getProjectVersion();
-//      version = version == null ? "" :
-//                version.equals("@version@") ? "" :
-//                " " + version.trim();
-//
-//      final String projectName = sample.getProjectName() + version;
-//      if ((projectName != null) && ! projectName.isEmpty()) {
-//          final Label projectNameTitleLabel = new Label("Project: ");
-//          projectNameTitleLabel.getStyleClass().add("project-name-title");
-//
-//          final Label projectNameLabel = new Label(projectName);
-//          projectNameLabel.getStyleClass().add("project-name");
-//          projectNameLabel.setWrapText(true);
-//
-//          final TextFlow textFlow = new TextFlow(projectNameTitleLabel, projectNameLabel);
-//          rightPanel.getChildren().add(textFlow);
-//      }
 
       // --- description
       final String description = sample.getSampleDescription();

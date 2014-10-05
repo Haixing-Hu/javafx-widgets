@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -214,6 +215,11 @@ public class ActionGroup extends AbstractAction {
     button.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
 
     button.getStyleClass().addAll(styleClass);
+    if (bindStyleClass) {
+      styleClass.setAll(button.getStyleClass());
+      Bindings.bindContentBidirectional(styleClass, button.getStyleClass());
+    }
+
     button.setOnAction(this);
 
     final ObservableList<MenuItem> buttonItems = button.getItems();
@@ -256,6 +262,11 @@ public class ActionGroup extends AbstractAction {
     menu.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
 
     menu.getStyleClass().addAll(styleClass);
+    if (bindStyleClass) {
+      styleClass.setAll(menu.getStyleClass());
+      Bindings.bindContentBidirectional(styleClass, menu.getStyleClass());
+    }
+
     menu.setOnAction(this);
 
     final ObservableList<MenuItem> menuItems = menu.getItems();

@@ -17,6 +17,7 @@
  */
 package com.github.haixing_hu.javafx.action;
 
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.CheckBox;
@@ -156,7 +157,12 @@ public abstract class Action extends AbstractAction {
     button.visibleProperty().bindBidirectional(visible);
     button.managedProperty().bindBidirectional(managed);
     button.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
+
     button.getStyleClass().addAll(styleClass);
+    if (bindStyleClass) {
+      styleClass.setAll(button.getStyleClass());
+      Bindings.bindContentBidirectional(styleClass, button.getStyleClass());
+    }
 
     button.setOnAction(this);
   }
@@ -235,6 +241,11 @@ public abstract class Action extends AbstractAction {
     item.mnemonicParsingProperty().bindBidirectional(mnemonicParsing);
 
     item.getStyleClass().addAll(styleClass);
+    if (bindStyleClass) {
+      styleClass.setAll(item.getStyleClass());
+      Bindings.bindContentBidirectional(styleClass, item.getStyleClass());
+    }
+
     item.setOnAction(this);
   }
 
