@@ -40,9 +40,13 @@ The `CardPane` implements a pane similar to `CardLayout` or `StackLayout`, and i
 
 This is the `PopOver` control comes from [ControlFX][controlsfx], with a silghtly modification for personal use.
 
+![PopOver Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/PopOver.png)
+
+Unlike the `PopupControl` and `Tooltip`, the `PopOver` control can put any controls on its content window.
+
 ### NoArrowMenuButton
 
-This is an extension of `MenuButton` but without the context menu arrow. 
+This is an extension of `MenuButton` without the context menu arrow. 
 
 ![NoArrowMenuButton Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/NoArrowMenuButton.png)
 
