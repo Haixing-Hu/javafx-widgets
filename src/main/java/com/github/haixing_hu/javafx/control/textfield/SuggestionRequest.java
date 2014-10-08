@@ -9,7 +9,7 @@
  *
  * Contributors:
  *     ControlsFX -  Initial implementation and API.
- *     Haixing Hu (https://github.com/Haixing-Hu/) - Fix bugs and add features.
+ *     Haixing Hu (https://github.com/Haixing-Hu/) - Refactor.
  *
  ******************************************************************************/
 
@@ -39,35 +39,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package com.github.haixing_hu.javafx.control.popover;
+package com.github.haixing_hu.javafx.control.textfield;
 
 /**
- * All possible arrow locations.
+ * Represents a suggestion fetch request
  */
-public enum ArrowLocation {
+public interface SuggestionRequest {
 
-  LEFT_TOP,
+  /**
+   * Tests whether this request is canceled.
+   *
+   * @return {@code true} if this request is canceled; {@code false} otherwise.
+   */
+  public boolean isCancelled();
 
-  LEFT_CENTER,
-
-  LEFT_BOTTOM,
-
-  RIGHT_TOP,
-
-  RIGHT_CENTER,
-
-  RIGHT_BOTTOM,
-
-  TOP_LEFT,
-
-  TOP_CENTER,
-
-  TOP_RIGHT,
-
-  BOTTOM_LEFT,
-
-  BOTTOM_CENTER,
-
-  BOTTOM_RIGHT;
+  /**
+   * Gets the user text to which suggestions shall be found.
+   *
+   * @return the user text to which suggestions shall be found.
+   */
+  public String getUserText();
 }

@@ -9,7 +9,7 @@
  *
  * Contributors:
  *     ControlsFX -  Initial implementation and API.
- *     Haixing Hu (https://github.com/Haixing-Hu/) - Fix bugs and add features.
+ *     Haixing Hu (https://github.com/Haixing-Hu/) - Refactor.
  *
  ******************************************************************************/
 
@@ -39,35 +39,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.github.haixing_hu.javafx.control.textfield;
 
-package com.github.haixing_hu.javafx.control.popover;
+import java.util.Collection;
+
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.util.Callback;
 
 /**
- * All possible arrow locations.
+ * This task is responsible to fetch suggestions asynchronous by using the
+ * current defined suggestion provider.
  */
-public enum ArrowLocation {
+class FetchSuggestionsTask<T> extends Task<Void> implements SuggestionRequest {
 
-  LEFT_TOP,
+  private final AutoCompletionBinding<T> binding;
+  private final String userText;
 
-  LEFT_CENTER,
+  public FetchSuggestionsTask(AutoCompletionBinding<T> binding, String userText) {
+    this.binding = binding;
+    this.userText = userText;
+  }
 
-  LEFT_BOTTOM,
+  @Override
+  protected Void call() throws Exception {
+    final Callback<SuggestionRequest, Collection<T>> provider = binding.suggestionProvider;
+    if (provider != null) {
+      final Collection<T> fetchedSuggestions = provider.call(this);
+      if (! isCancelled()) {
+        Platform.runLater(() -> {
+          if ((fetchedSuggestions != null) && (! fetchedSuggestions.isEmpty())) {
+            binding.autoCompletionPopup.getSuggestions().addAll(fetchedSuggestions);
+            binding.showPopup();
+          } else {  // No suggestions found, so hide the popup
+            binding.hidePopup();
+          }
+        });
+      }
+    } else {   // No suggestion provider
+      binding.hidePopup();
+    }
+    return null;
+  }
 
-  RIGHT_TOP,
-
-  RIGHT_CENTER,
-
-  RIGHT_BOTTOM,
-
-  TOP_LEFT,
-
-  TOP_CENTER,
-
-  TOP_RIGHT,
-
-  BOTTOM_LEFT,
-
-  BOTTOM_CENTER,
-
-  BOTTOM_RIGHT;
+  @Override
+  public String getUserText() {
+    return userText;
+  }
 }

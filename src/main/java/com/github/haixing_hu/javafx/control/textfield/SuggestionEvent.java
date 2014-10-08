@@ -9,7 +9,7 @@
  *
  * Contributors:
  *     ControlsFX -  Initial implementation and API.
- *     Haixing Hu (https://github.com/Haixing-Hu/) - Fix bugs and add features.
+ *     Haixing Hu (https://github.com/Haixing-Hu/) - Refactor.
  *
  ******************************************************************************/
 
@@ -39,35 +39,41 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.github.haixing_hu.javafx.control.textfield;
 
-package com.github.haixing_hu.javafx.control.popover;
+import javafx.event.Event;
+import javafx.event.EventType;
+
 
 /**
- * All possible arrow locations.
+ * Represents an Event which is fired when the user has selected a suggestion
+ * for auto-complete
+ *
+ * @param <T>
+ *          the type of suggestions.
+ * @author ControlsFX
+ * @author Haixing Hu
  */
-public enum ArrowLocation {
+public class SuggestionEvent<T> extends Event {
 
-  LEFT_TOP,
+  private static final long serialVersionUID = 1L;
 
-  LEFT_CENTER,
+  @SuppressWarnings("rawtypes")
+  public static final EventType<SuggestionEvent> SUGGESTION = new EventType<>("SUGGESTION");
 
-  LEFT_BOTTOM,
+  private final T suggestion;
 
-  RIGHT_TOP,
+  public SuggestionEvent(T suggestion) {
+    super(SUGGESTION);
+    this.suggestion = suggestion;
+  }
 
-  RIGHT_CENTER,
-
-  RIGHT_BOTTOM,
-
-  TOP_LEFT,
-
-  TOP_CENTER,
-
-  TOP_RIGHT,
-
-  BOTTOM_LEFT,
-
-  BOTTOM_CENTER,
-
-  BOTTOM_RIGHT;
+  /**
+   * Returns the suggestion which was chosen by the user
+   *
+   * @return
+   */
+  public T getSuggestion() {
+    return suggestion;
+  }
 }

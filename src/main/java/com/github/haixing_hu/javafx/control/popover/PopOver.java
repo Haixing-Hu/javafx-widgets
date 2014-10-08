@@ -1,3 +1,18 @@
+/******************************************************************************
+ *
+ * Copyright (c) 2014  Haixing Hu
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     ControlsFX -  Initial implementation and API.
+ *     Haixing Hu (https://github.com/Haixing-Hu/) - Fix bugs and add features.
+ *
+ ******************************************************************************/
+
 /**
  * Copyright (c) 2013, ControlsFX
  * All rights reserved.
@@ -24,23 +39,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-
-/******************************************************************************
- *
- * Copyright (c) 2014  Haixing Hu
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution,
- * and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     ControlsFX -  Initial implementation and API.
- *     Haixing Hu (https://github.com/Haixing-Hu/) - Fix bugs and add features.
- *
- ******************************************************************************/
-
 package com.github.haixing_hu.javafx.control.popover;
 
 import javafx.animation.FadeTransition;

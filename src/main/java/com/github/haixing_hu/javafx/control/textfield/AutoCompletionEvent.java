@@ -9,7 +9,7 @@
  *
  * Contributors:
  *     ControlsFX -  Initial implementation and API.
- *     Haixing Hu (https://github.com/Haixing-Hu/) - Fix bugs and add features.
+ *     Haixing Hu (https://github.com/Haixing-Hu/) - Refactor.
  *
  ******************************************************************************/
 
@@ -39,35 +39,45 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.github.haixing_hu.javafx.control.textfield;
 
-package com.github.haixing_hu.javafx.control.popover;
+import javafx.event.Event;
+import javafx.event.EventType;
 
 /**
- * All possible arrow locations.
+ * The class of the event which is fired after an auto completion.
+ *
+ * @param <T>
+ *          the type of the completion.
  */
-public enum ArrowLocation {
+@SuppressWarnings("serial")
+public class AutoCompletionEvent<T> extends Event {
 
-  LEFT_TOP,
+  /**
+   * The event type that should be listened to by people interested in knowing
+   * when an auto completion has been performed.
+   */
+  @SuppressWarnings("rawtypes")
+  public static final EventType<AutoCompletionEvent> AUTO_COMPLETED = new EventType<>(
+      "AUTO_COMPLETED");
 
-  LEFT_CENTER,
+  private final T completion;
 
-  LEFT_BOTTOM,
+  /**
+   * Creates a new event that can subsequently be fired.
+   *
+   * @param completion
+   *          the chosen completion.
+   */
+  public AutoCompletionEvent(T completion) {
+    super(AUTO_COMPLETED);
+    this.completion = completion;
+  }
 
-  RIGHT_TOP,
-
-  RIGHT_CENTER,
-
-  RIGHT_BOTTOM,
-
-  TOP_LEFT,
-
-  TOP_CENTER,
-
-  TOP_RIGHT,
-
-  BOTTOM_LEFT,
-
-  BOTTOM_CENTER,
-
-  BOTTOM_RIGHT;
+  /**
+   * Returns the chosen completion.
+   */
+  public T getCompletion() {
+    return completion;
+  }
 }

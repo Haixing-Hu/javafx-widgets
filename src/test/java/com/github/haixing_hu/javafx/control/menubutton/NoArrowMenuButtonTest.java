@@ -43,7 +43,7 @@ public class NoArrowMenuButtonTest extends Application {
     button1.getItems().addAll(item1, item2, item3, item4);
     root.getChildren().add(button1);
 
-    primaryStage.setScene(new Scene(root, 600, 400));
+    primaryStage.setScene(new Scene(root, 300, 200));
     primaryStage.show();
   }
 
