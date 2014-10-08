@@ -133,46 +133,6 @@ public class TextFields {
   }
 
   /**
-   * Create a new auto-completion binding between the given textField and the
-   * given suggestion provider.
-   * <p>
-   * The {@link TextFields} API has some suggestion-provider builder methods for
-   * simple use cases.
-   *
-   * @param textField
-   *          The {@link TextField} to which auto-completion shall be added
-   * @param suggestionProvider
-   *          A suggestion-provider strategy to use
-   * @param converter
-   *          The converter to be used to convert suggestions to strings.
-   * @return the {@link AutoCompletionBinding}.
-   */
-  public static <T> AutoCompletionBinding<T> bindAutoCompletion(
-      TextField textField, SuggestionProvider<T> suggestionProvider,
-      StringConverter<T> converter) {
-    return new AutoCompletionTextFieldBinding<>(textField, suggestionProvider,
-        converter);
-  }
-
-  /**
-   * Create a new auto-completion binding between the given textField and the
-   * given suggestion provider.
-   * <p>
-   * The {@link TextFields} API has some suggestion-provider builder methods for
-   * simple use cases.
-   *
-   * @param textField
-   *          The {@link TextField} to which auto-completion shall be added
-   * @param suggestionProvider
-   *          A suggestion-provider strategy to use
-   * @return The {@link AutoCompletionBinding}.
-   */
-  public static <T> AutoCompletionBinding<T> bindAutoCompletion(
-      TextField textField, SuggestionProvider<T> suggestionProvider) {
-    return new AutoCompletionTextFieldBinding<>(textField, suggestionProvider);
-  }
-
-  /**
    * Create a new auto-completion binding between the given {@link TextField}
    * using the given auto-complete suggestions.
    *
@@ -187,7 +147,7 @@ public class TextFields {
       TextField textField, T... possibleSuggestions) {
     final DefaultSuggestionProvider<T> provider = new DefaultSuggestionProvider<T>();
     provider.addSuggestions(possibleSuggestions);
-    return new AutoCompletionTextFieldBinding<>(textField, provider);
+    return new AutoCompletionTextFieldBinding<T>(textField, provider);
   }
 
   /**
@@ -204,6 +164,45 @@ public class TextFields {
       TextField textField, Collection<T> possibleSuggestions) {
     final DefaultSuggestionProvider<T> provider = new DefaultSuggestionProvider<T>();
     provider.addSuggestions(possibleSuggestions);
-    return new AutoCompletionTextFieldBinding<>(textField, provider);
+    return new AutoCompletionTextFieldBinding<T>(textField, provider);
+  }
+
+  /**
+   * Create a new auto-completion binding between the given textField and the
+   * given suggestion provider.
+   * <p>
+   * The {@link TextFields} API has some suggestion-provider builder methods for
+   * simple use cases.
+   *
+   * @param textField
+   *          The {@link TextField} to which auto-completion shall be added.
+   * @param provider
+   *          A suggestion-provider strategy to use.
+   * @return The {@link AutoCompletionBinding}.
+   */
+  public static <T> AutoCompletionBinding<T> bindAutoCompletion(
+      TextField textField, SuggestionProvider<T> provider) {
+    return new AutoCompletionTextFieldBinding<T>(textField, provider);
+  }
+
+  /**
+   * Create a new auto-completion binding between the given textField and the
+   * given suggestion provider.
+   * <p>
+   * The {@link TextFields} API has some suggestion-provider builder methods for
+   * simple use cases.
+   *
+   * @param textField
+   *          The {@link TextField} to which auto-completion shall be added.
+   * @param provider
+   *          A suggestion-provider strategy to use.
+   * @param converter
+   *          The converter to be used to convert suggestions to strings.
+   * @return the {@link AutoCompletionBinding}.
+   */
+  public static <T> AutoCompletionBinding<T> bindAutoCompletion(
+      TextField textField, SuggestionProvider<T> provider,
+      StringConverter<T> converter) {
+    return new AutoCompletionTextFieldBinding<T>(textField, provider, converter);
   }
 }

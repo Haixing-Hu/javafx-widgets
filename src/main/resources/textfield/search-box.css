@@ -21,15 +21,17 @@
 
 .search-box {	
     -fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, -fx-control-inner-background;
-    -fx-background-insets: 0, -1, 0;    	    
-    -fx-background-radius: 15;
-    -fx-prompt-text-fill: grey;
+    -fx-background-insets: -1, -1, 0;
+    -fx-background-radius: 14, 14, 14;    
+    -fx-text-fill: -fx-text-inner-color;
+    -fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+    -fx-cursor: text;
 }
 
 .search-box:focused {
-    -fx-background-color: -fx-focus-color, white;
+    -fx-background-color: -fx-focus-color, -fx-control-inner-background;
     -fx-background-insets: -1.4, 0;
-    -fx-background-radius: 15;
+    -fx-background-radius: 14;
 }
 
 .search-box .clear-button {
@@ -39,10 +41,10 @@
 .search-box .clear-button > .graphic {
     -fx-background-color: #929292;
     -fx-padding: 0;
-    -fx-min-height: 12;
-    -fx-max-height: 12;
-    -fx-min-width: 12;
-    -fx-max-width: 12;
+    -fx-min-height: 13;
+    -fx-max-height: 13;
+    -fx-min-width: 13;
+    -fx-max-width: 13;
     -fx-scale-shape: true;
     -fx-shape: "M7.5,0C3.358,0,0,3.357,0,7.5C0,11.641,3.358,15,7.5,15c4.143,0,
     7.5-3.359,7.5-7.5 C15,3.357,11.643,0,7.5,0z M10.329,11.742L7.5,8.914l-2.828,
@@ -65,10 +67,10 @@
 .search-box .search-button > .graphic {
     -fx-background-color: #929292;
     -fx-padding: 0;
-    -fx-min-height: 13;
-    -fx-max-height: 13;
-    -fx-min-width: 13;
-    -fx-max-width: 13;
+    -fx-min-height: 14;
+    -fx-max-height: 14;
+    -fx-min-width: 14;
+    -fx-max-width: 14;
     -fx-scale-shape: true;
     -fx-shape: "M172.77,123.025L144.825,95.08c6.735-9.722,10.104-20.559,10.104-32.508c0-7.767-1.508-15.195-4.523-22.283
 	c-3.014-7.089-7.088-13.199-12.221-18.332s-11.242-9.207-18.33-12.221c-7.09-3.015-14.518-4.522-22.285-4.522

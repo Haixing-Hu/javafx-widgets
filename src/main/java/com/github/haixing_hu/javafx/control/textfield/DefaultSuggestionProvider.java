@@ -50,9 +50,8 @@ public class DefaultSuggestionProvider<T> extends AbstractSuggestionProvider<T> 
 
   @Override
   protected boolean isMatch(T suggestion, SuggestionRequest request) {
-    final String userTextLower = request.getUserText().toLowerCase();
-    final String suggestionStr = converter.toString(suggestion).toLowerCase();
-    return suggestionStr.contains(userTextLower)
-        && (! suggestionStr.equals(userTextLower));
+    final String userText = request.getUserText().toLowerCase();
+    final String suggestionText = converter.toString(suggestion).toLowerCase();
+    return suggestionText.startsWith(userText);
   }
 }

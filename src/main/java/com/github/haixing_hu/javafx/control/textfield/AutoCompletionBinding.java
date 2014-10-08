@@ -121,7 +121,7 @@ public abstract class AutoCompletionBinding<T> implements EventTarget {
       @SuppressWarnings({ "rawtypes", "unchecked" })
       @Override
       protected void invalidated() {
-        eventHandlerManager.setEventHandler(AutoCompletionEvent.AUTO_COMPLETED,
+        eventHandlerManager.setEventHandler(AutoCompletionEvent.TYPE,
             (EventHandler<AutoCompletionEvent>) (Object) get());
       }
 
@@ -174,7 +174,7 @@ public abstract class AutoCompletionBinding<T> implements EventTarget {
   /**
    * Show the auto completion popup.
    */
-  protected void showPopup() {
+  public void showPopup() {
     autoCompletionPopup.show(completionTarget);
     selectFirstSuggestion(autoCompletionPopup);
   }
@@ -182,7 +182,7 @@ public abstract class AutoCompletionBinding<T> implements EventTarget {
   /**
    * Hide the auto completion popup.
    */
-  protected void hidePopup() {
+  public void hidePopup() {
     autoCompletionPopup.hide();
   }
 
@@ -192,7 +192,7 @@ public abstract class AutoCompletionBinding<T> implements EventTarget {
    * @param completion
    *      a provided completion.
    */
-  protected void fireAutoCompletion(T completion) {
+  public void fireAutoCompletion(T completion) {
     Event.fireEvent(this, new AutoCompletionEvent<>(completion));
   }
 

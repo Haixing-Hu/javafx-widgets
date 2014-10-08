@@ -59,12 +59,13 @@ public class SuggestionEvent<T> extends Event {
   private static final long serialVersionUID = 1L;
 
   @SuppressWarnings("rawtypes")
-  public static final EventType<SuggestionEvent> SUGGESTION = new EventType<>("SUGGESTION");
+  public static final EventType<SuggestionEvent> TYPE =
+      new EventType<>("SUGGESTION_EVENT");
 
   private final T suggestion;
 
   public SuggestionEvent(T suggestion) {
-    super(SUGGESTION);
+    super(TYPE);
     this.suggestion = suggestion;
   }
 

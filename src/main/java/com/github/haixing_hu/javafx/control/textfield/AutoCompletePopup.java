@@ -88,7 +88,7 @@ public class AutoCompletePopup<T> extends PopupControl {
       @SuppressWarnings({ "rawtypes", "unchecked" })
       @Override
       protected void invalidated() {
-        eventHandlerManager.setEventHandler(SuggestionEvent.SUGGESTION,
+        eventHandlerManager.setEventHandler(SuggestionEvent.TYPE,
             (EventHandler<SuggestionEvent>) (Object) get());
       }
 
@@ -175,7 +175,7 @@ public class AutoCompletePopup<T> extends PopupControl {
    *          the new event handler triggered when suggestions should be shown.
    */
   public final void setOnSuggestion(EventHandler<SuggestionEvent<T>> value) {
-    onSuggestionProperty().set(value);
+    onSuggestion.set(value);
   }
 
   /**
@@ -184,7 +184,7 @@ public class AutoCompletePopup<T> extends PopupControl {
    * @return the event handler triggered when suggestions should be shown.
    */
   public final EventHandler<SuggestionEvent<T>> getOnSuggestion() {
-    return onSuggestionProperty().get();
+    return onSuggestion.get();
   }
 
   @Override
@@ -194,6 +194,6 @@ public class AutoCompletePopup<T> extends PopupControl {
 
   @Override
   protected Skin<?> createDefaultSkin() {
-    return new AutoCompletePopupSkin<>(this);
+    return new AutoCompletePopupSkin<T>(this);
   }
 }

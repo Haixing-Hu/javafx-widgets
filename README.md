@@ -82,6 +82,13 @@ This is a mac style search box, which is also an extension of `CustomPasswordFie
 
 ![SearchBox Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/SearchBox.png)
 
+### AutoCompletionBinding
+
+This is the controls comes from [ControlFX][controlsfx], with a refactor of codes and fixing of bugs.
+
+![AutoCompletionBinding Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/AutoCompletion.png)
+
+
 ### HorizontalSpace and VerticalSpace
 
 These simple widgets are rendered as horizontal or verital spaces.

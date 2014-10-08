@@ -44,6 +44,8 @@ package com.github.haixing_hu.javafx.control.textfield;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.util.StringConverter;
 
 import com.github.haixing_hu.javafx.util.ToStringConverter;
@@ -110,6 +112,14 @@ public class AutoCompletionTextFieldBinding<T> extends AutoCompletionBinding<T> 
 
     textField.textProperty().addListener(textChangeListener);
     textField.focusedProperty().addListener(focusChangedListener);
+
+    //  hide the popup if user press ESC in the text field
+    final KeyCodeCombination escapeComb = new KeyCodeCombination(KeyCode.ESCAPE);
+    textField.setOnKeyReleased(event -> {
+      if (escapeComb.match(event)) {
+        hidePopup();
+      }
+    });
   }
 
   @Override

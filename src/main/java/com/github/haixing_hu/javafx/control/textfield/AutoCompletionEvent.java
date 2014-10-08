@@ -58,8 +58,8 @@ public class AutoCompletionEvent<T> extends Event {
    * when an auto completion has been performed.
    */
   @SuppressWarnings("rawtypes")
-  public static final EventType<AutoCompletionEvent> AUTO_COMPLETED = new EventType<>(
-      "AUTO_COMPLETED");
+  public static final EventType<AutoCompletionEvent> TYPE =
+      new EventType<>("AUTOCOMPLETION_EVENT");
 
   private final T completion;
 
@@ -70,7 +70,7 @@ public class AutoCompletionEvent<T> extends Event {
    *          the chosen completion.
    */
   public AutoCompletionEvent(T completion) {
-    super(AUTO_COMPLETED);
+    super(TYPE);
     this.completion = completion;
   }
 

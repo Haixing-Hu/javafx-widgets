@@ -66,8 +66,7 @@ public class AutoCompletionTextFieldTest extends Application {
     //
     final TextField textField = new TextField();
 
-    TextFields.bindAutoCompletion(textField, "Hey", "Hello", "Hello World",
-        "Apple", "Cool", "Costa", "Cola", "Coca Cola");
+    TextFields.bindAutoCompletion(textField, possibleSuggestions);
 
     grid.add(new Label("Auto-complete Text"), 0, 0);
     grid.add(textField, 1, 0);
@@ -106,8 +105,10 @@ public class AutoCompletionTextFieldTest extends Application {
     possibleSuggestions.add(newWord);
     // we dispose the old binding and recreate a new binding
     if (autoCompletionBinding != null) {
+      logger.info("dispose old binding");
       autoCompletionBinding.dispose();
     }
+    logger.info("Build new binding with suggestions: {}", possibleSuggestions);
     autoCompletionBinding =
         TextFields.bindAutoCompletion(learningTextField, possibleSuggestions);
   }
@@ -119,7 +120,7 @@ public class AutoCompletionTextFieldTest extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     final Pane root = createPane(primaryStage);
-    primaryStage.setTitle("Test AutoCompletionTextField");
+    primaryStage.setTitle("AutoCompletionTextField Sample");
     primaryStage.setScene(new Scene(root, 400, 300));
     primaryStage.show();
   }

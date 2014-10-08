@@ -49,6 +49,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Skin;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
 import org.slf4j.Logger;
@@ -66,12 +67,14 @@ public class AutoCompletePopupSkin<T> implements Skin<AutoCompletePopup<T>> {
 
   private final int LIST_CELL_HEIGHT = 24;  //  FIXME: fix this hard coded hack
 
+  private final int LIST_CELL_MARGIN_BOTTOM = 2; //  FIXME: fix this hard coded hack
+
   private final AutoCompletePopup<T> control;
   private final ListView<T> suggestionList;
 
   public AutoCompletePopupSkin(AutoCompletePopup<T> control) {
     this.control = control;
-    suggestionList = new ListView<>(control.getSuggestions());
+    suggestionList = new ListView<T>(control.getSuggestions());
     suggestionList.getStyleClass().add(AutoCompletePopup.STYLE_CLASS);
     final URL cssUrl = AutoCompletionBinding.class.getResource(STYLE_SHEET);
     if (cssUrl != null) {
@@ -80,9 +83,12 @@ public class AutoCompletePopupSkin<T> implements Skin<AutoCompletePopup<T>> {
       final Logger logger = LoggerFactory.getLogger(AutoCompletePopupSkin.class);
       logger.error("Failed to load the resource: {}", STYLE_SHEET);
     }
-    //  FIXME: fix this hard coded hack.
+
     suggestionList.prefHeightProperty().bind(
-        Bindings.size(suggestionList.getItems()).multiply(LIST_CELL_HEIGHT).add(15));
+        Bindings.size(suggestionList.getItems())
+                .multiply(LIST_CELL_HEIGHT)
+                .add(LIST_CELL_MARGIN_BOTTOM)
+    );
 
     suggestionList.maxHeightProperty().bind(control.maxHeightProperty());
     suggestionList.setCellFactory(
@@ -97,15 +103,10 @@ public class AutoCompletePopupSkin<T> implements Skin<AutoCompletePopup<T>> {
         onSuggestionChoosen(item);
       }
     });
-
     suggestionList.setOnKeyPressed(event -> {
-      final T item = suggestionList.getSelectionModel().getSelectedItem();
-      switch (event.getCode()) {
-        case ENTER:
-          onSuggestionChoosen(item);
-          break;
-        default:
-          break;
+      if (event.getCode() == KeyCode.ENTER) {
+        final T item = suggestionList.getSelectionModel().getSelectedItem();
+        onSuggestionChoosen(item);
       }
     });
   }
