@@ -41,7 +41,7 @@ public class ClearablePasswordFieldTest extends Application {
     root.setPadding(new Insets(20));
     final ClearablePasswordField field = new ClearablePasswordField();
     root.getChildren().add(field);
-    primaryStage.setTitle("Test ClearablePasswordField");
+    primaryStage.setTitle("ClearablePasswordField Sample");
     primaryStage.setScene(new Scene(root, 300, 100));
     primaryStage.show();
   }

@@ -118,7 +118,7 @@ public class CustomTextFieldTest extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     final Pane root = createPane(primaryStage);
-    primaryStage.setTitle("Test CustomTextField and CustomPasswordField");
+    primaryStage.setTitle("CustomTextField and CustomPasswordField Samples");
     primaryStage.setScene(new Scene(root, 700, 400));
     primaryStage.show();
   }

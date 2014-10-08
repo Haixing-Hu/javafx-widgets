@@ -91,7 +91,6 @@ These simple widgets are rendered as horizontal or verital spaces.
 ![VerticalSpace Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/VerticalSpace.png)
 
 
-
 ### Others
 
 More widgets will be added when I need them :-)

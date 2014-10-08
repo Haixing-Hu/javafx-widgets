@@ -41,7 +41,7 @@ public class ClearableTextFieldTest extends Application {
     root.setPadding(new Insets(20));
     final ClearableTextField field = new ClearableTextField();
     root.getChildren().add(field);
-    primaryStage.setTitle("Test ClearableTextField");
+    primaryStage.setTitle("ClearableTextField Sample");
     primaryStage.setScene(new Scene(root, 300, 100));
     primaryStage.show();
   }
