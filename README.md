@@ -38,21 +38,53 @@ The `CardPane` implements a pane similar to `CardLayout` or `StackLayout`, and i
 
 ### PopOver
 
-This is the `PopOver` control comes from [ControlFX](http://fxexperience.com/controlsfx/features/#popover), with a silghtly modification for personal use.
+This is the `PopOver` control comes from [ControlFX][controlsfx], with a silghtly modification for personal use.
 
 ### NoArrowMenuButton
 
 This is an extension of `MenuButton` but without the context menu arrow. 
 
+![NoArrowMenuButton Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/NoArrowMenuButton.png)
+
 Although it's possible to use CSS styling hack to get rid of the context menu arrow of a menu button, but chaning the default style could affect the appearance of other components, such as `Menu` and `MenuBar`. Therfore, I hack the source code of `MenuButton` and create a `NoArrowMenuButton` control. 
 
 Note that due to the access limitation of Sun's internal packages, the context menu of `NoArrowMenuButton` cannot support the mnemonics. Also, the code **may be broken** due to the changes of impelementation details in the future version of JDK.
 
+### CustomTextField and CustomPasswordField
+
+This is the controls comes from [ControlFX][controlsfx], with a refactor of source codes.
+
+![CustomTextField and CustomPasswordField Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/CustomTextField.png)
+
+The `CustomTextField` and `CustomPasswordField` combines normal `TextField` or `Password` with a left node and a right node. The user could customize the left node and right node to provide new features for the text fields.
+
+The following `ClearableTextField`, `ClearablePasswordField`, and `SearchBox` are based on these customized text fields.
+
+#### ClearableTextField
+
+This is a simple extension of `CustomTextField`, providing a clear content button on the right of a `TextField`.
+
+![ClearableTextField Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/ClearableTextField.png)
+
+#### ClearablePasswordField
+
+This is a simple extension of `CustomPasswordField`, providing a clear content button on the right of a `PasswordField`.
+
+![ClearablePasswordField Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/ClearablePasswordField.png)
+
+#### SearchBox
+
+This is a mac style search box, which is also an extension of `CustomPasswordField`.
+
+![SearchBox Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/SearchBox.png)
 
 
 ### Others
 
 More widgets will be added when I need them :-)
+
+
+[controlsfx]: http://fxexperience.com/controlsfx/
 
 ## Dependency
 
