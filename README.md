@@ -88,7 +88,6 @@ This is the controls comes from [ControlFX][controlsfx], with a refactor of code
 
 ![AutoCompletionBinding Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/AutoCompletion.png)
 
-
 ### HorizontalSpace and VerticalSpace
 
 These simple widgets are rendered as horizontal or verital spaces.

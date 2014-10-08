@@ -51,6 +51,8 @@ import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Skin;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.util.StringConverter;
 
 import javax.annotation.Nullable;
@@ -135,6 +137,14 @@ public abstract class AutoCompletionBinding<T> implements EventTarget {
         return "onAutoCompleted"; //$NON-NLS-1$
       }
     };
+
+    //  hide the popup if user press the single ESC in the completion target
+    final KeyCodeCombination escapeComb = new KeyCodeCombination(KeyCode.ESCAPE);
+    completionTarget.setOnKeyReleased(event -> {
+      if (escapeComb.match(event)) {
+        hidePopup();
+      }
+    });
   }
 
   /**
