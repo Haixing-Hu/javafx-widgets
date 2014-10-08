@@ -82,6 +82,15 @@ This is a mac style search box, which is also an extension of `CustomPasswordFie
 
 ![SearchBox Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/SearchBox.png)
 
+### HorizontalSpace and VerticalSpace
+
+These simple widgets are rendered as horizontal or verital spaces.
+
+![HorizontalSpace Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/HorizontalSpace.png)
+
+![VerticalSpace Screenshot](https://raw.githubusercontent.com/Haixing-Hu/javafx-widgets/master/screenshots/VerticalSpace.png)
+
+
 
 ### Others
 

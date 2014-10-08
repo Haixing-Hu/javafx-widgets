@@ -38,7 +38,7 @@
 
 .search-box .clear-button > .graphic {
     -fx-background-color: #929292;
-    -fx-padding: 6; 	/* Graphic is 12x12 px */
+    -fx-padding: 0;
     -fx-min-height: 12;
     -fx-max-height: 12;
     -fx-min-width: 12;
@@ -64,11 +64,11 @@
 
 .search-box .search-button > .graphic {
     -fx-background-color: #929292;
-    -fx-padding: 6; 	/* Graphic is 12x12 px */
-    -fx-min-height: 12;
-    -fx-max-height: 12;
-    -fx-min-width: 12;
-    -fx-max-width: 12;
+    -fx-padding: 0;
+    -fx-min-height: 13;
+    -fx-max-height: 13;
+    -fx-min-width: 13;
+    -fx-max-width: 13;
     -fx-scale-shape: true;
     -fx-shape: "M172.77,123.025L144.825,95.08c6.735-9.722,10.104-20.559,10.104-32.508c0-7.767-1.508-15.195-4.523-22.283
 	c-3.014-7.089-7.088-13.199-12.221-18.332s-11.242-9.207-18.33-12.221c-7.09-3.015-14.518-4.522-22.285-4.522
