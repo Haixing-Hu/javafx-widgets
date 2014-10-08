@@ -19,16 +19,16 @@
  * 
  **************************************************************************/
 
-.search-box {
+.search-box {	
     -fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, -fx-control-inner-background;
-    -fx-background-insets: 0, -1, 1;    	    
+    -fx-background-insets: 0, -1, 0;    	    
     -fx-background-radius: 15;
     -fx-prompt-text-fill: grey;
 }
 
 .search-box:focused {
     -fx-background-color: -fx-focus-color, white;
-    -fx-background-insets: -1.4, 1;
+    -fx-background-insets: -1.4, 0;
     -fx-background-radius: 15;
 }
 
