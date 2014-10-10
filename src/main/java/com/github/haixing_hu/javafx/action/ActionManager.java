@@ -101,7 +101,7 @@ public class ActionManager {
    * @param id
    *          the id of an action.
    * @return the text (i.e., title) of the specified action, or
-   *         <code>null</code> if it has none.
+   *         {@code null} if it has none.
    */
   public final String getText(String id) {
     final IAction action = map.get(id);
@@ -120,7 +120,7 @@ public class ActionManager {
    *          the id of an action.
    * @param text
    *          the new text (i.e., title) to be set to the specified action, or
-   *          <code>null</code> to set none.
+   *          {@code null} to set none.
    */
   public final void setText(String id, @Nullable String text) {
     final IAction action = map.get(id);
@@ -158,7 +158,7 @@ public class ActionManager {
    * @param id
    *          the id of an action.
    * @return the description (i.e., tool tip) of this action, or
-   *         <code>null</code> if it has none.
+   *         {@code null} if it has none.
    */
   public final String getDescription(String id) {
     final IAction action = map.get(id);
@@ -180,7 +180,7 @@ public class ActionManager {
    *          the id of an action.
    * @param description
    *          the new description (i.e., tool tip) to be set to this action, or
-   *          <code>null</code> to set none.
+   *          {@code null} to set none.
    */
   public final void setDescription(String id, @Nullable String description) {
     final IAction action = map.get(id);
@@ -222,7 +222,7 @@ public class ActionManager {
    *
    * @param id
    *          the id of an action.
-   * @return the style of this action, or <code>null</code> if it has none.
+   * @return the style of this action, or {@code null} if it has none.
    */
   public final String getStyle(String id) {
     final IAction action = map.get(id);
@@ -246,7 +246,7 @@ public class ActionManager {
    * @param id
    *          the id of an action.
    * @param style
-   *          the new style to be set to this action, or <code>null</code> to
+   *          the new style to be set to this action, or {@code null} to
    *          set none.
    */
   public final void setStyle(String id, @Nullable String style) {
@@ -292,7 +292,7 @@ public class ActionManager {
    *
    * @param id
    *          the id of an action.
-   * @return the accelerator of this action, or <code>null</code> if it has
+   * @return the accelerator of this action, or {@code null} if it has
    *         none.
    */
   public final KeyCombination getAccelerator(String id) {
@@ -317,7 +317,7 @@ public class ActionManager {
    * @param id
    *          the id of an action.
    * @param accelerator
-   *          the new accelerator to be set to this action, or <code>null</code>
+   *          the new accelerator to be set to this action, or {@code null}
    *          to set none.
    */
   public final void setAccelerator(String id, @Nullable KeyCombination accelerator) {
@@ -360,7 +360,7 @@ public class ActionManager {
    *
    * @param id
    *          the id of an action.
-   * @return the graphic of this action, or <code>null</code> if it has none.
+   * @return the graphic of this action, or {@code null} if it has none.
    */
   public final Node getGraphic(String id) {
     final IAction action = map.get(id);
@@ -381,7 +381,7 @@ public class ActionManager {
    * @param id
    *          the id of an action.
    * @param graphic
-   *          the new graphic to be set to this action, or <code>null</code> to
+   *          the new graphic to be set to this action, or {@code null} to
    *          set none.
    */
   public final void setGraphic(String id, @Nullable Node graphic) {

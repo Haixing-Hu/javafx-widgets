@@ -111,7 +111,7 @@ public abstract class CustomTextFieldSkin extends TextFieldSkin {
   @Override
   protected void handleControlPropertyChanged(String p) {
     super.handleControlPropertyChanged(p);
-    if ((p == "LEFT_NODE") || (p == "RIGHT_NODE")) {
+    if ("LEFT_NODE".equals(p) || "RIGHT_NODE".equals(p)) {
       updateChildren();
     }
   }

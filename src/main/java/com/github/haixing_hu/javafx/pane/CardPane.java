@@ -28,7 +28,7 @@ import javafx.scene.layout.Pane;
  * The following code shows how to use it.
  *
  * <pre>
- * <code>
+ * {@code 
  * StackPane card1 = new StackPane();
  * card1.getChildren().add(new Label("Card 1"));
  * StackPane card2 = new StackPane();
@@ -39,7 +39,7 @@ import javafx.scene.layout.Pane;
  * pane.addAllCards(card1, card2, card3);
  * ...
  * pane.showCard(1);
- * </code>
+ * }
  * </pre>
  *
  * @author Haixing Hu

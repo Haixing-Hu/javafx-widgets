@@ -76,7 +76,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * an action, use the {@link #getButtonId()}, {@link #setButtonId(String)},
    * {@link #getMenuItemId()}, and {@link #setMenuItemId(String)}.
    *
-   * @return the id of this action, or <code>null</code> if it has none.
+   * @return the id of this action, or {@code null} if it has none.
    */
   public String getId();
 
@@ -89,7 +89,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * {@link #getMenuItemId()}, and {@link #setMenuItemId(String)}.
    *
    * @param id
-   *          the new id to be set to this action, or <code>null</code> to set
+   *          the new id to be set to this action, or {@code null} to set
    *          none.
    */
   public void setId(@Nullable String id);
@@ -97,7 +97,7 @@ public interface IAction extends EventHandler<ActionEvent> {
   /**
    * Gets the id of the button created from this action.
    *
-   * @return the id of the button created from this action, or <code>null</code>
+   * @return the id of the button created from this action, or {@code null}
    *         if it has none.
    */
   public String getButtonId();
@@ -107,7 +107,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    *
    * @param buttonId
    *          the new id to be set to the button created from this action, or
-   *          <code>null</code> to set none.
+   *          {@code null} to set none.
    */
   public void setButtonId(@Nullable String buttonId);
 
@@ -115,7 +115,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * Gets the id of the menu item created from this action.
    *
    * @return the id of the menu item created from this action, or
-   *         <code>null</code> if it has none.
+   *         {@code null} if it has none.
    */
   public String getMenuItemId();
 
@@ -124,14 +124,14 @@ public interface IAction extends EventHandler<ActionEvent> {
    *
    * @param menuItemId
    *          the new id to be set to the menu item created from this action, or
-   *          <code>null</code> to set none.
+   *          {@code null} to set none.
    */
   public void setMenuItemId(@Nullable String menuItemId);
 
   /**
    * Gets the text (i.e., title) of this action.
    *
-   * @return the text (i.e., title) of this action, or <code>null</code> if it
+   * @return the text (i.e., title) of this action, or {@code null} if it
    *         has none.
    */
   public String getText();
@@ -141,7 +141,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    *
    * @param text
    *          the new text (i.e., title) to be set to this action, or
-   *          <code>null</code> to set none.
+   *          {@code null} to set none.
    */
   public void setText(@Nullable String text);
 
@@ -159,7 +159,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * action.
    *
    * @return the description (i.e., tool tip) of this action, or
-   *         <code>null</code> if it has none.
+   *         {@code null} if it has none.
    */
   public String getDescription();
 
@@ -171,7 +171,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    *
    * @param description
    *          the new description (i.e., tool tip) to be set to this action, or
-   *          <code>null</code> to set none.
+   *          {@code null} to set none.
    */
   public void setDescription(@Nullable String description);
 
@@ -194,7 +194,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * this variable contains style properties and values and not the selector
    * portion of a style rule.
    *
-   * @return the style of this action, or <code>null</code> if it has none.
+   * @return the style of this action, or {@code null} if it has none.
    */
   public String getStyle();
 
@@ -208,7 +208,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * portion of a style rule.
    *
    * @param style
-   *          the new style to be set to this action, or <code>null</code> to
+   *          the new style to be set to this action, or {@code null} to
    *          set none.
    */
   public void setStyle(@Nullable String style);
@@ -235,7 +235,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * <b>NOTE: </b> this property is only useful for menu items created from this
    * action.
    *
-   * @return the accelerator of this action, or <code>null</code> if it has
+   * @return the accelerator of this action, or {@code null} if it has
    *         none.
    */
   public KeyCombination getAccelerator();
@@ -250,7 +250,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * action.
    *
    * @param accelerator
-   *          the new accelerator to be set to this action, or <code>null</code>
+   *          the new accelerator to be set to this action, or {@code null}
    *          to set none.
    */
   public void setAccelerator(@Nullable KeyCombination accelerator);
@@ -274,7 +274,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * The graphic of an action is normally an {@link ImageView} node, but there
    * is no requirement for this to be the case.
    *
-   * @return the graphic of this action, or <code>null</code> if it has none.
+   * @return the graphic of this action, or {@code null} if it has none.
    */
   public Node getGraphic();
 
@@ -285,7 +285,7 @@ public interface IAction extends EventHandler<ActionEvent> {
    * is no requirement for this to be the case.
    *
    * @param graphic
-   *          the new graphic to be set to this action, or <code>null</code> to
+   *          the new graphic to be set to this action, or {@code null} to
    *          set none.
    */
   public void setGraphic(@Nullable Node graphic);
