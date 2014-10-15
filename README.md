@@ -109,7 +109,7 @@ More widgets will be added when I need them :-)
 The project depends on the following projects of mine:
 
 * [pom-root](https://github.com/Haixing-Hu/pom-root): which provides configuration of dependent packages for all projects.
-* [java-commons](https://github.com/Haixing-Hu/commons): which provides commonly used classes and functions for my personal Java programming.
+* [commons](https://github.com/Haixing-Hu/commons): which provides commonly used classes and functions for my personal Java programming.
 
 ## Build
 

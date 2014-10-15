@@ -27,7 +27,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.github.haixing_hu</groupId>
-			<artifactId>java-commons</artifactId>
+			<artifactId>commons</artifactId>
 		</dependency>
 	</dependencies>
 </project>
